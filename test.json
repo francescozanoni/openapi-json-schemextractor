@@ -1,0 +1,12 @@
+{
+  "definitions": {
+    "person": {
+      "name": {
+        "type": "string"
+      }
+    },
+    "color": {
+      "$ref": "#/definitions/person"
+    }
+  }
+}
