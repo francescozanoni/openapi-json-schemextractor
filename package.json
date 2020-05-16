@@ -1,4 +1,15 @@
 {
+  "name": "openapi-to-html-forms",
+  "description": "Convert OpenAPI schemas to HTML forms",
+  "version": "1.0.0",
+  "main": "src/run.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/francescozanoni/openapi-to-html-forms.git"
+  },
+  "keywords": ["openapi", "form"],
+  "author": "Francesco Zanoni <francescozanoni81@gmail.com>",
+  "license": "MIT",
   "dependencies": {
     "@apidevtools/json-schema-ref-parser": "^9.0.1",
     "@openapi-contrib/openapi-schema-to-json-schema": "^3.0.0",
