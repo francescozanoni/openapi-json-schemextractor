@@ -7,13 +7,22 @@
     "type": "git",
     "url": "https://github.com/francescozanoni/openapi-to-html-forms.git"
   },
-  "keywords": ["openapi", "form"],
+  "keywords": [
+    "openapi",
+    "form"
+  ],
   "author": "Francesco Zanoni <francescozanoni81@gmail.com>",
   "license": "MIT",
+  "scripts": {
+    "test": "jest"
+  },
   "dependencies": {
     "@apidevtools/json-schema-ref-parser": "^9.0.1",
     "@openapi-contrib/openapi-schema-to-json-schema": "^3.0.0",
     "json-schema-merge-allof": "^0.7.0",
     "jsonform": "jsonform/jsonform"
+  },
+  "devDependencies": {
+    "jest": "^26.0.1"
   }
 }
