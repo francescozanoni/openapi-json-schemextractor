@@ -5,17 +5,34 @@ const toJsonSchema = require("@openapi-contrib/openapi-schema-to-json-schema");
 const mergeAllOf = require("json-schema-merge-allof");
 const utils = require("./utils");
 
-const testSchemaFilePath = "test.json";
+const testSchemaFilePath = process.argv[2];
 
 (async function () {
 
     try {
 
-        let schema = await $RefParser.dereference(testSchemaFilePath);
-        utils.removeKey(schema, "example");
-        utils.removeKey(schema, "audits");
-        let convertedSchema = toJsonSchema(schema.components.schemas);
-        let student = mergeAllOf(convertedSchema.Student, {ignoreAdditionalProperties: true});
+        // Load OpenAPI schema, parse to object and resolve all $ref's.
+        let schemas = await $RefParser.dereference(testSchemaFilePath);
+        
+        // Keep only model schems.
+        schemas = schemas.components.schemas;
+        
+        // Remove keys not supported by JSON schema.
+        schemas = utils.removeKey(schemas, "example");
+        
+        // Remove unwanted keys.
+        schemas = utils.removeKey(schemas, "audits");
+        schemas = utils.removeKey(schemas, "Audit");
+        schemas = utils.removeKey(schemas, "Auditable");
+        
+        for (let schema in schemas) {
+           // Merge top-level allOf's of each schema.
+           schemas[schema] = mergeAllOf(schemas[schema], {ignoreAdditionalProperties: true});
+           // Convert each schema to JSON schema.
+           schemas[schema] = toJsonSchema(schemas[schema]);
+        }
+        
+        console.log(schemas);
 
     } catch (err) {
 
