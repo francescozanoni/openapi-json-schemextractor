@@ -1,12 +1,12 @@
 "use strict";
 
-const convert = require("./convert");
+const Converter = require("./index");
 
 const inputSchemaPath = process.argv[2];
 
 (async function () {
 
-    const jsonSchemas = await convert(inputSchemaPath);
+    const jsonSchemas = await Converter.fromFile(inputSchemaPath);
 
     console.log(jsonSchemas);
 
