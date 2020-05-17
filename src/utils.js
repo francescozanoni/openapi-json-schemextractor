@@ -15,6 +15,7 @@ module.exports = {
      * @todo switch keyToRemove to an array
      */
     removeKey: function (object, keyToRemove) {
+
         if ((typeof object) !== "object" ||
             (typeof keyToRemove) !== "string") {
             throw Error("Invalid input");
@@ -27,8 +28,9 @@ module.exports = {
                 object[key] = this.removeKey(object[key], keyToRemove);
             }
         }
-        
+
         return object;
+
     }
 
 };

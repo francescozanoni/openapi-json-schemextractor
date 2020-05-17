@@ -1,11 +1,19 @@
-# openapi-to-html-forms
-Convert OpenAPI schemas to HTML forms
+# openapi-models-to-json-schemas
+Convert OpenAPI model schemas to JSON schemas
 
-Run:
+### Run
+```bash
 node src/run.js <path_to_openapi_schema>
+```
 
-Dependencies:
-  - https://github.com/APIDevTools/json-schema-ref-parser
-  - https://github.com/openapi-contrib/openapi-schema-to-json-schema
-  - https://github.com/mokkabonna/json-schema-merge-allof
-  - https://github.com/jsonform/jsonform
+### Test
+```bash
+yarn test
+# or
+npm run test
+```
+
+### Dependencies:
+- https://github.com/APIDevTools/json-schema-ref-parser
+- https://github.com/openapi-contrib/openapi-schema-to-json-schema
+- https://github.com/mokkabonna/json-schema-merge-allof

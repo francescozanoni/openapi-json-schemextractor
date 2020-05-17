@@ -1,15 +1,15 @@
 {
-  "name": "openapi-to-html-forms",
-  "description": "Convert OpenAPI schemas to HTML forms",
+  "name": "openapi-models-to-json-schemas",
+  "description": "Convert OpenAPI model schemas to JSON schemas",
   "version": "1.0.0",
   "main": "src/run.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/francescozanoni/openapi-to-html-forms.git"
+    "url": "https://github.com/francescozanoni/openapi-models-to-json-schemas.git"
   },
   "keywords": [
     "openapi",
-    "form"
+    "json-schema"
   ],
   "author": "Francesco Zanoni <francescozanoni81@gmail.com>",
   "license": "MIT",
@@ -19,8 +19,7 @@
   "dependencies": {
     "@apidevtools/json-schema-ref-parser": "^9.0.1",
     "@openapi-contrib/openapi-schema-to-json-schema": "^3.0.0",
-    "json-schema-merge-allof": "^0.7.0",
-    "jsonform": "jsonform/jsonform"
+    "json-schema-merge-allof": "^0.7.0"
   },
   "devDependencies": {
     "jest": "^26.0.1"
