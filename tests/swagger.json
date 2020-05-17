@@ -1,0 +1,1158 @@
+{
+  "info": {
+    "title": "Student management API",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/students": {
+      "get": {
+        "summary": "Returns a list of students",
+        "operationId": "getStudents",
+        "tags": [
+          "students"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "with_audits",
+            "description": "Flag indicating whether resources must be returned with audits",
+            "required": false,
+            "type": "boolean"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Response returning a list of students",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status_code": {
+                  "type": "integer",
+                  "description": "HTTP status code"
+                },
+                "status": {
+                  "type": "string",
+                  "description": "HTTP status description"
+                },
+                "message": {
+                  "type": "string"
+                },
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/Student"
+                  }
+                }
+              },
+              "required": [
+                "status_code",
+                "status",
+                "message",
+                "data"
+              ],
+              "example": {
+                "status_code": 200,
+                "status": "OK",
+                "message": "Resource(s) found",
+                "data": [
+                  {
+                    "id": 1,
+                    "first_name": "John",
+                    "last_name": "Doe",
+                    "e_mail": "john.doe@foo.com",
+                    "phone": "1234-567890",
+                    "nationality": "GB"
+                  },
+                  {
+                    "id": 2,
+                    "first_name": "Jane",
+                    "last_name": "Doe",
+                    "e_mail": "jane.doe@bar.com",
+                    "nationality": "CA"
+                  }
+                ]
+              }
+            }
+          },
+          "404": {
+            "description": "Generic response reporting no resource(s) found",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status_code": {
+                  "type": "integer",
+                  "description": "HTTP status code"
+                },
+                "status": {
+                  "type": "string",
+                  "description": "HTTP status description"
+                },
+                "message": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "status_code",
+                "status",
+                "message"
+              ],
+              "example": {
+                "status_code": 404,
+                "status": "Not Found",
+                "message": "Resource(s) not found"
+              }
+            }
+          },
+          "500": {
+            "description": "Generic response reporting an unexpected error",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status_code": {
+                  "type": "integer",
+                  "description": "HTTP status code"
+                },
+                "status": {
+                  "type": "string",
+                  "description": "HTTP status description"
+                },
+                "message": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "status_code",
+                "status",
+                "message"
+              ],
+              "example": {
+                "status_code": 500,
+                "status": "Internal Server Error",
+                "message": "An internal server error occurred"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Creates a new student",
+        "operationId": "createStudent",
+        "tags": [
+          "students"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "x-user-id",
+            "description": "User ID, used to mark audit ownership",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "required": true,
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/NewStudent"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Response returning a student",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status_code": {
+                  "type": "integer",
+                  "description": "HTTP status code"
+                },
+                "status": {
+                  "type": "string",
+                  "description": "HTTP status description"
+                },
+                "message": {
+                  "type": "string"
+                },
+                "data": {
+                  "$ref": "#/definitions/Student"
+                }
+              },
+              "required": [
+                "status_code",
+                "status",
+                "message",
+                "data"
+              ],
+              "example": {
+                "status_code": 200,
+                "status": "OK",
+                "message": "Resource successfully retrieved/created/modified",
+                "data": {
+                  "id": 1,
+                  "first_name": "John",
+                  "last_name": "Doe",
+                  "e_mail": "john.doe@foo.com",
+                  "phone": "1234-567890",
+                  "nationality": "GB"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Response reporting invalid request",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status_code": {
+                  "type": "integer",
+                  "description": "HTTP status code"
+                },
+                "status": {
+                  "type": "string",
+                  "description": "HTTP status description"
+                },
+                "message": {
+                  "type": "string",
+                  "description": "Reason making request invalid"
+                },
+                "data": {
+                  "type": "object",
+                  "description": "Input item(s) making request invalid"
+                }
+              },
+              "required": [
+                "status_code",
+                "status",
+                "message",
+                "data"
+              ],
+              "example": {
+                "status_code": 400,
+                "status": "Bad Request",
+                "message": "Request is not valid",
+                "data": {
+                  "id": [
+                    "code error_type",
+                    "value abc",
+                    "expected integer",
+                    "used string"
+                  ]
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Generic response reporting an unexpected error",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status_code": {
+                  "type": "integer",
+                  "description": "HTTP status code"
+                },
+                "status": {
+                  "type": "string",
+                  "description": "HTTP status description"
+                },
+                "message": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "status_code",
+                "status",
+                "message"
+              ],
+              "example": {
+                "status_code": 500,
+                "status": "Internal Server Error",
+                "message": "An internal server error occurred"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/students/{id}": {
+      "get": {
+        "summary": "Returns a student",
+        "operationId": "getStudentById",
+        "tags": [
+          "students"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "The ID of the student to retrieve",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "with_audits",
+            "description": "Flag indicating whether resources must be returned with audits",
+            "required": false,
+            "type": "boolean"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Response returning a student",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status_code": {
+                  "type": "integer",
+                  "description": "HTTP status code"
+                },
+                "status": {
+                  "type": "string",
+                  "description": "HTTP status description"
+                },
+                "message": {
+                  "type": "string"
+                },
+                "data": {
+                  "$ref": "#/definitions/Student"
+                }
+              },
+              "required": [
+                "status_code",
+                "status",
+                "message",
+                "data"
+              ],
+              "example": {
+                "status_code": 200,
+                "status": "OK",
+                "message": "Resource successfully retrieved/created/modified",
+                "data": {
+                  "id": 1,
+                  "first_name": "John",
+                  "last_name": "Doe",
+                  "e_mail": "john.doe@foo.com",
+                  "phone": "1234-567890",
+                  "nationality": "GB"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Response reporting invalid request",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status_code": {
+                  "type": "integer",
+                  "description": "HTTP status code"
+                },
+                "status": {
+                  "type": "string",
+                  "description": "HTTP status description"
+                },
+                "message": {
+                  "type": "string",
+                  "description": "Reason making request invalid"
+                },
+                "data": {
+                  "type": "object",
+                  "description": "Input item(s) making request invalid"
+                }
+              },
+              "required": [
+                "status_code",
+                "status",
+                "message",
+                "data"
+              ],
+              "example": {
+                "status_code": 400,
+                "status": "Bad Request",
+                "message": "Request is not valid",
+                "data": {
+                  "id": [
+                    "code error_type",
+                    "value abc",
+                    "expected integer",
+                    "used string"
+                  ]
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Generic response reporting no resource(s) found",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status_code": {
+                  "type": "integer",
+                  "description": "HTTP status code"
+                },
+                "status": {
+                  "type": "string",
+                  "description": "HTTP status description"
+                },
+                "message": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "status_code",
+                "status",
+                "message"
+              ],
+              "example": {
+                "status_code": 404,
+                "status": "Not Found",
+                "message": "Resource(s) not found"
+              }
+            }
+          },
+          "500": {
+            "description": "Generic response reporting an unexpected error",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status_code": {
+                  "type": "integer",
+                  "description": "HTTP status code"
+                },
+                "status": {
+                  "type": "string",
+                  "description": "HTTP status description"
+                },
+                "message": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "status_code",
+                "status",
+                "message"
+              ],
+              "example": {
+                "status_code": 500,
+                "status": "Internal Server Error",
+                "message": "An internal server error occurred"
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "summary": "Updates a student",
+        "operationId": "updateStudentById",
+        "tags": [
+          "students"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "The ID of the student to update",
+            "type": "integer"
+          },
+          {
+            "in": "header",
+            "name": "x-user-id",
+            "description": "User ID, used to mark audit ownership",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "required": true,
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/NewStudent"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Response returning a student",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status_code": {
+                  "type": "integer",
+                  "description": "HTTP status code"
+                },
+                "status": {
+                  "type": "string",
+                  "description": "HTTP status description"
+                },
+                "message": {
+                  "type": "string"
+                },
+                "data": {
+                  "$ref": "#/definitions/Student"
+                }
+              },
+              "required": [
+                "status_code",
+                "status",
+                "message",
+                "data"
+              ],
+              "example": {
+                "status_code": 200,
+                "status": "OK",
+                "message": "Resource successfully retrieved/created/modified",
+                "data": {
+                  "id": 1,
+                  "first_name": "John",
+                  "last_name": "Doe",
+                  "e_mail": "john.doe@foo.com",
+                  "phone": "1234-567890",
+                  "nationality": "GB"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Response reporting invalid request",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status_code": {
+                  "type": "integer",
+                  "description": "HTTP status code"
+                },
+                "status": {
+                  "type": "string",
+                  "description": "HTTP status description"
+                },
+                "message": {
+                  "type": "string",
+                  "description": "Reason making request invalid"
+                },
+                "data": {
+                  "type": "object",
+                  "description": "Input item(s) making request invalid"
+                }
+              },
+              "required": [
+                "status_code",
+                "status",
+                "message",
+                "data"
+              ],
+              "example": {
+                "status_code": 400,
+                "status": "Bad Request",
+                "message": "Request is not valid",
+                "data": {
+                  "id": [
+                    "code error_type",
+                    "value abc",
+                    "expected integer",
+                    "used string"
+                  ]
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Generic response reporting no resource(s) found",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status_code": {
+                  "type": "integer",
+                  "description": "HTTP status code"
+                },
+                "status": {
+                  "type": "string",
+                  "description": "HTTP status description"
+                },
+                "message": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "status_code",
+                "status",
+                "message"
+              ],
+              "example": {
+                "status_code": 404,
+                "status": "Not Found",
+                "message": "Resource(s) not found"
+              }
+            }
+          },
+          "500": {
+            "description": "Generic response reporting an unexpected error",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status_code": {
+                  "type": "integer",
+                  "description": "HTTP status code"
+                },
+                "status": {
+                  "type": "string",
+                  "description": "HTTP status description"
+                },
+                "message": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "status_code",
+                "status",
+                "message"
+              ],
+              "example": {
+                "status_code": 500,
+                "status": "Internal Server Error",
+                "message": "An internal server error occurred"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Deletes a student",
+        "operationId": "deleteStudentById",
+        "tags": [
+          "students"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "The ID of the student to delete",
+            "type": "integer"
+          },
+          {
+            "in": "header",
+            "name": "x-user-id",
+            "description": "User ID, used to mark audit ownership",
+            "required": false,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Response confirming deletion of a resource",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status_code": {
+                  "type": "integer",
+                  "description": "HTTP status code"
+                },
+                "status": {
+                  "type": "string",
+                  "description": "HTTP status description"
+                },
+                "message": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "status_code",
+                "status",
+                "message"
+              ],
+              "example": {
+                "status_code": 200,
+                "status": "OK",
+                "message": "Resource deleted"
+              }
+            }
+          },
+          "400": {
+            "description": "Response reporting invalid request",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status_code": {
+                  "type": "integer",
+                  "description": "HTTP status code"
+                },
+                "status": {
+                  "type": "string",
+                  "description": "HTTP status description"
+                },
+                "message": {
+                  "type": "string",
+                  "description": "Reason making request invalid"
+                },
+                "data": {
+                  "type": "object",
+                  "description": "Input item(s) making request invalid"
+                }
+              },
+              "required": [
+                "status_code",
+                "status",
+                "message",
+                "data"
+              ],
+              "example": {
+                "status_code": 400,
+                "status": "Bad Request",
+                "message": "Request is not valid",
+                "data": {
+                  "id": [
+                    "code error_type",
+                    "value abc",
+                    "expected integer",
+                    "used string"
+                  ]
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Generic response reporting no resource(s) found",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status_code": {
+                  "type": "integer",
+                  "description": "HTTP status code"
+                },
+                "status": {
+                  "type": "string",
+                  "description": "HTTP status description"
+                },
+                "message": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "status_code",
+                "status",
+                "message"
+              ],
+              "example": {
+                "status_code": 404,
+                "status": "Not Found",
+                "message": "Resource(s) not found"
+              }
+            }
+          },
+          "500": {
+            "description": "Generic response reporting an unexpected error",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status_code": {
+                  "type": "integer",
+                  "description": "HTTP status code"
+                },
+                "status": {
+                  "type": "string",
+                  "description": "HTTP status description"
+                },
+                "message": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "status_code",
+                "status",
+                "message"
+              ],
+              "example": {
+                "status_code": 500,
+                "status": "Internal Server Error",
+                "message": "An internal server error occurred"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "swagger": "2.0",
+  "schemes": [
+    "http"
+  ],
+  "host": "localhost",
+  "basePath": "/",
+  "definitions": {
+    "Audit": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "event": {
+          "type": "string"
+        },
+        "old_values": {
+          "type": "object"
+        },
+        "new_values": {
+          "type": "object"
+        },
+        "user_id": {
+          "type": "integer"
+        },
+        "created_at": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "event",
+        "created_at"
+      ],
+      "example": {
+        "id": 6,
+        "event": "updated",
+        "old_values": {
+          "title": "First title",
+          "content": "First content",
+          "student_id": 1,
+          "id": 1
+        },
+        "new_values": {
+          "title": "First modified title",
+          "content": "First modified content",
+          "student_id": 1,
+          "id": 1
+        },
+        "user_id": 34,
+        "created_at": "2019-01-01 01:00:00"
+      }
+    },
+    "Auditable": {
+      "type": "object",
+      "properties": {
+        "audits": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Audit"
+          }
+        }
+      },
+      "example": {
+        "audits": [
+          {
+            "id": 3,
+            "event": "created",
+            "new_values": {
+              "title": "First title",
+              "content": "First content",
+              "student_id": 1,
+              "id": 1
+            },
+            "user_id": 12,
+            "created_at": "2019-01-01 00:00:00"
+          },
+          {
+            "id": 6,
+            "event": "updated",
+            "old_values": {
+              "title": "First title",
+              "content": "First content",
+              "student_id": 1,
+              "id": 1
+            },
+            "new_values": {
+              "title": "First modified title",
+              "content": "First modified content",
+              "student_id": 1,
+              "id": 1
+            },
+            "user_id": 34,
+            "created_at": "2019-01-01 01:00:00"
+          }
+        ]
+      }
+    },
+    "NewStudent": {
+      "type": "object",
+      "properties": {
+        "first_name": {
+          "type": "string",
+          "minLength": 2
+        },
+        "last_name": {
+          "type": "string",
+          "minLength": 2
+        },
+        "e_mail": {
+          "type": "string"
+        },
+        "phone": {
+          "type": "string"
+        },
+        "nationality": {
+          "type": "string",
+          "pattern": "^[A-Z]{2}$"
+        }
+      },
+      "required": [
+        "first_name",
+        "last_name",
+        "e_mail",
+        "nationality"
+      ],
+      "additionalProperties": false,
+      "example": {
+        "first_name": "John",
+        "last_name": "Doe",
+        "e_mail": "john.doe@foo.com",
+        "phone": "1234-567890",
+        "nationality": "GB"
+      }
+    },
+    "Student": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/NewStudent"
+        },
+        {
+          "$ref": "#/definitions/Auditable"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "integer"
+            }
+          },
+          "required": [
+            "id"
+          ],
+          "additionalProperties": false
+        }
+      ],
+      "example": {
+        "id": 1,
+        "first_name": "John",
+        "last_name": "Doe",
+        "e_mail": "john.doe@foo.com",
+        "phone": "1234-567890",
+        "nationality": "GB"
+      }
+    }
+  },
+  "x-components": {
+    "parameters": {
+      "WithAudits": {
+        "in": "query",
+        "name": "with_audits",
+        "description": "Flag indicating whether resources must be returned with audits",
+        "required": false,
+        "type": "boolean"
+      },
+      "UserId": {
+        "in": "header",
+        "name": "x-user-id",
+        "description": "User ID, used to mark audit ownership",
+        "required": false,
+        "type": "integer"
+      }
+    },
+    "responses": {
+      "BadRequest": {
+        "description": "Response reporting invalid request",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "status_code": {
+              "type": "integer",
+              "description": "HTTP status code"
+            },
+            "status": {
+              "type": "string",
+              "description": "HTTP status description"
+            },
+            "message": {
+              "type": "string",
+              "description": "Reason making request invalid"
+            },
+            "data": {
+              "type": "object",
+              "description": "Input item(s) making request invalid"
+            }
+          },
+          "required": [
+            "status_code",
+            "status",
+            "message",
+            "data"
+          ],
+          "example": {
+            "status_code": 400,
+            "status": "Bad Request",
+            "message": "Request is not valid",
+            "data": {
+              "id": [
+                "code error_type",
+                "value abc",
+                "expected integer",
+                "used string"
+              ]
+            }
+          }
+        }
+      },
+      "NotFound": {
+        "description": "Generic response reporting no resource(s) found",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "status_code": {
+              "type": "integer",
+              "description": "HTTP status code"
+            },
+            "status": {
+              "type": "string",
+              "description": "HTTP status description"
+            },
+            "message": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "status_code",
+            "status",
+            "message"
+          ],
+          "example": {
+            "status_code": 404,
+            "status": "Not Found",
+            "message": "Resource(s) not found"
+          }
+        }
+      },
+      "InternalServerError": {
+        "description": "Generic response reporting an unexpected error",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "status_code": {
+              "type": "integer",
+              "description": "HTTP status code"
+            },
+            "status": {
+              "type": "string",
+              "description": "HTTP status description"
+            },
+            "message": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "status_code",
+            "status",
+            "message"
+          ],
+          "example": {
+            "status_code": 500,
+            "status": "Internal Server Error",
+            "message": "An internal server error occurred"
+          }
+        }
+      },
+      "Students": {
+        "description": "Response returning a list of students",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "status_code": {
+              "type": "integer",
+              "description": "HTTP status code"
+            },
+            "status": {
+              "type": "string",
+              "description": "HTTP status description"
+            },
+            "message": {
+              "type": "string"
+            },
+            "data": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Student"
+              }
+            }
+          },
+          "required": [
+            "status_code",
+            "status",
+            "message",
+            "data"
+          ],
+          "example": {
+            "status_code": 200,
+            "status": "OK",
+            "message": "Resource(s) found",
+            "data": [
+              {
+                "id": 1,
+                "first_name": "John",
+                "last_name": "Doe",
+                "e_mail": "john.doe@foo.com",
+                "phone": "1234-567890",
+                "nationality": "GB"
+              },
+              {
+                "id": 2,
+                "first_name": "Jane",
+                "last_name": "Doe",
+                "e_mail": "jane.doe@bar.com",
+                "nationality": "CA"
+              }
+            ]
+          }
+        }
+      },
+      "Student": {
+        "description": "Response returning a student",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "status_code": {
+              "type": "integer",
+              "description": "HTTP status code"
+            },
+            "status": {
+              "type": "string",
+              "description": "HTTP status description"
+            },
+            "message": {
+              "type": "string"
+            },
+            "data": {
+              "$ref": "#/definitions/Student"
+            }
+          },
+          "required": [
+            "status_code",
+            "status",
+            "message",
+            "data"
+          ],
+          "example": {
+            "status_code": 200,
+            "status": "OK",
+            "message": "Resource successfully retrieved/created/modified",
+            "data": {
+              "id": 1,
+              "first_name": "John",
+              "last_name": "Doe",
+              "e_mail": "john.doe@foo.com",
+              "phone": "1234-567890",
+              "nationality": "GB"
+            }
+          }
+        }
+      }
+    }
+  }
+}
