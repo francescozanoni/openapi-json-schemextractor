@@ -1,13 +1,19 @@
 "use strict";
 
+const util = require("util");
+
 const Converter = require("../lib/index");
 
-const inputSchemaPath = process.argv[2];
+const schemaPath = process.argv[2];
+
+if ((typeof schemaPath) === "undefined") {
+    console.error("Schema path not provided");
+}
 
 (async function () {
 
-    const jsonSchemas = await Converter.fromFile(inputSchemaPath);
+    const jsonSchemas = await Converter.fromFile(schemaPath);
 
-    console.log(jsonSchemas);
+    console.log(util.inspect(jsonSchemas, {depth: null}));
 
 })();

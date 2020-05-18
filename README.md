@@ -4,9 +4,9 @@ Convert [OpenAPI](https://swagger.io/docs/specification/about) model schemas to 
 
 Both OpenAPI 2 (a.k.a. Swagger) and OpenAPI 3 specifications are supported.
 
-### Run
+### Run CLI example
 ```bash
-node src/run.js <path_to_schema>
+node bin/run.js https://petstore.swagger.io/v2/swagger.json
 ```
 
 ### Test
