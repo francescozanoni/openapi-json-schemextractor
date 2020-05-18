@@ -3,7 +3,7 @@
 const $RefParser = require("@apidevtools/json-schema-ref-parser");
 const toJsonSchema = require("@openapi-contrib/openapi-schema-to-json-schema");
 const mergeAllOf = require("json-schema-merge-allof");
-const utils = require("./utils");
+const helpers = require("./helpers");
 
 const Converter = {
 
@@ -33,13 +33,13 @@ const Converter = {
         }
 
         // Remove keys not supported by JSON schema.
-        schemas = utils.removeKey(schemas, "example");
+        schemas = helpers.removeKeyFromObject(schemas, "example");
 
         // Remove unwanted keys.
         // @todo refactor by reading from input arguments
-        schemas = utils.removeKey(schemas, "audits");
-        schemas = utils.removeKey(schemas, "Audit");
-        schemas = utils.removeKey(schemas, "Auditable");
+        schemas = helpers.removeKeyFromObject(schemas, "audits");
+        schemas = helpers.removeKeyFromObject(schemas, "Audit");
+        schemas = helpers.removeKeyFromObject(schemas, "Auditable");
 
         for (let schema in schemas) {
 

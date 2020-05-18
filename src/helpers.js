@@ -14,7 +14,7 @@ module.exports = {
      *
      * @todo switch keyToRemove to an array
      */
-    removeKey: function (object, keyToRemove) {
+    removeKeyFromObject: function (object, keyToRemove) {
 
         if ((typeof object) !== "object" ||
             (typeof keyToRemove) !== "string") {
@@ -25,7 +25,7 @@ module.exports = {
             if (key === keyToRemove) {
                 delete object[key];
             } else if (typeof object[key] === "object") {
-                object[key] = this.removeKey(object[key], keyToRemove);
+                object[key] = this.removeKeyFromObject(object[key], keyToRemove);
             }
         }
 
