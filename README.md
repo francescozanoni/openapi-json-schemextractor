@@ -6,7 +6,78 @@ Both OpenAPI 2 (a.k.a. Swagger) and OpenAPI 3 specifications are supported.
 
 ### Run CLI example
 ```bash
-node bin/run.js https://petstore.swagger.io/v2/swagger.json
+node bin/run.js https://raw.githubusercontent.com/OAI/OpenAPI-Specification/master/examples/v3.0/petstore.yaml
+```
+
+```json
+{
+  "Pet": {
+    "type": "object",
+    "required": [
+      "id",
+      "name"
+    ],
+    "properties": {
+      "id": {
+        "type": "integer",
+        "format": "int64",
+        "minimum": -9223372036854776000,
+        "maximum": 9223372036854776000
+      },
+      "name": {
+        "type": "string"
+      },
+      "tag": {
+        "type": "string"
+      }
+    },
+    "$schema": "http://json-schema.org/draft-04/schema#"
+  },
+  "Pets": {
+    "type": "array",
+    "items": {
+      "type": "object",
+      "required": [
+        "id",
+        "name"
+      ],
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64",
+          "minimum": -9223372036854776000,
+          "maximum": 9223372036854776000
+        },
+        "name": {
+          "type": "string"
+        },
+        "tag": {
+          "type": "string"
+        }
+      }
+    },
+    "$schema": "http://json-schema.org/draft-04/schema#"
+  },
+  "Error": {
+    "type": "object",
+    "required": [
+      "code",
+      "message"
+    ],
+    "properties": {
+      "code": {
+        "type": "integer",
+        "format": "int32",
+        "minimum": -2147483648,
+        "maximum": 2147483647
+      },
+      "message": {
+        "type": "string"
+      }
+    },
+    "$schema": "http://json-schema.org/draft-04/schema#"
+  }
+}
 ```
 
 ### Test

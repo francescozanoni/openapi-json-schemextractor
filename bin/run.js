@@ -14,6 +14,6 @@ if ((typeof schemaPath) === "undefined") {
 
     const jsonSchemas = await Converter.fromFile(schemaPath);
 
-    console.log(util.inspect(jsonSchemas, {depth: null}));
+    console.log(JSON.stringify(jsonSchemas, null, 2));
 
 })();
