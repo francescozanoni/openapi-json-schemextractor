@@ -23,6 +23,7 @@
     "json-schema-merge-allof": "^0.7.0"
   },
   "devDependencies": {
-    "jest": "^26.0.1"
+    "jest": "^26.0.1",
+    "oas-schemas": "https://github.com/OAI/OpenAPI-Specification"
   }
 }
