@@ -1,6 +1,6 @@
 "use strict";
 
-const Converter = require("./index");
+const Converter = require("../lib/index");
 
 const inputSchemaPath = process.argv[2];
 
