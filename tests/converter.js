@@ -16,7 +16,7 @@ describe("fromFile", () => {
                 },
                 message: {
                     type: "string"
-                },
+                }
             },
             required: [
                 "code",
@@ -82,6 +82,13 @@ describe("fromFile", () => {
 
     test("petstore.json v2.0", async () => {
         let schemaFilePath = "node_modules/oas-schemas/examples/v2.0/json/petstore.json";
+        await expect(Converter.fromFile(schemaFilePath))
+            .resolves
+            .toStrictEqual(result);
+    });
+
+    test("petstore.yaml v3.0", async () => {
+        let schemaFilePath = "node_modules/oas-schemas/examples/v3.0/petstore.yaml";
         await expect(Converter.fromFile(schemaFilePath))
             .resolves
             .toStrictEqual(result);
