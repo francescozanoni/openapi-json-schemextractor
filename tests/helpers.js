@@ -24,6 +24,34 @@ describe("removeKeyFromObject", () => {
             .toStrictEqual(after);
     });
 
+    test("found key with value", () => {
+        const after = {
+            a: 1,
+            b: 2,
+            c: {
+                a: 3
+            }
+        };
+        expect(helpers.removeKeyFromObject(before, "b", [4]))
+            .toStrictEqual(after);
+    });
+
+    test("found key with values", () => {
+        const after = {
+            a: 1,
+            c: {
+                a: 3
+            }
+        };
+        expect(helpers.removeKeyFromObject(before, "b", [2, 4, 1]))
+            .toStrictEqual(after);
+    });
+
+    test("found key but not matching values", () => {
+        expect(helpers.removeKeyFromObject(before, "b", ["d", 3]))
+            .toStrictEqual(before);
+    });
+
     test("not found key", () => {
         expect(helpers.removeKeyFromObject(before, "d"))
             .toStrictEqual(before);

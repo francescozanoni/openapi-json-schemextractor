@@ -10,8 +10,6 @@ describe("fromFile", () => {
             properties: {
                 code: {
                     format: "int32",
-                    maximum: 2147483647,
-                    minimum: -2147483648,
                     type: "integer"
                 },
                 message: {
@@ -29,8 +27,6 @@ describe("fromFile", () => {
             properties: {
                 id: {
                     format: "int64",
-                    maximum: 9223372036854776000,
-                    minimum: -9223372036854776000,
                     type: "integer"
                 },
                 name: {
@@ -52,8 +48,6 @@ describe("fromFile", () => {
                 properties: {
                     id: {
                         format: "int64",
-                        maximum: 9223372036854776000,
-                        minimum: -9223372036854776000,
                         type: "integer"
                     },
                     name: {
@@ -104,8 +98,6 @@ describe("fromFile without some keys", () => {
             properties: {
                 code: {
                     format: "int32",
-                    maximum: 2147483647,
-                    minimum: -2147483648,
                     type: "integer"
                 },
                 message: {
@@ -123,8 +115,6 @@ describe("fromFile without some keys", () => {
             properties: {
                 id: {
                     format: "int64",
-                    maximum: 9223372036854776000,
-                    minimum: -9223372036854776000,
                     type: "integer"
                 },
                 name: {
@@ -143,8 +133,6 @@ describe("fromFile without some keys", () => {
                 properties: {
                     id: {
                         format: "int64",
-                        maximum: 9223372036854776000,
-                        minimum: -9223372036854776000,
                         type: "integer"
                     },
                     name: {
