@@ -74,11 +74,18 @@ node bin/run.js https://raw.githubusercontent.com/OAI/OpenAPI-Specification/mast
 }
 ```
 
-### Test
+### Test (*nix)
 ```bash
-yarn test
+node_modules/.bin/jest
 # or
-npm run test
+docker run -it --rm -v "$PWD":/usr/src/app -w /usr/src/app node:10 node_modules/.bin/jest
+```
+
+### Test (Windows)
+```bat
+node_modules\.bin\jest.cmd
+# or
+docker run -it --rm -v %cd%:/usr/src/app -w /usr/src/app node:10 node_modules/.bin/jest
 ```
 
 ### Dependencies:
