@@ -1,15 +1,17 @@
-# openapi-models-to-json-schemas [![Build Status](https://travis-ci.org/francescozanoni/openapi-models-to-json-schemas.svg?branch=master)](https://travis-ci.org/francescozanoni/openapi-models-to-json-schemas)
+# openapi-models-to-json-schemas [![Build Status](https://travis-ci.org/francescozanoni/openapi-models-to-json-schemas.svg?branch=master)](https://travis-ci.org/francescozanoni/openapi-models-to-json-schemas) [![Coverage Status](https://coveralls.io/repos/github/francescozanoni/openapi-models-to-json-schemas/badge.svg?branch=master&service=github)](https://coveralls.io/github/francescozanoni/openapi-models-to-json-schemas?branch=master&service=github)
 
 Convert [OpenAPI](https://swagger.io/docs/specification/about) model schemas to [JSON schema](https://json-schema.org)s.
 
 Both OpenAPI 2 (a.k.a. Swagger) and OpenAPI 3 specifications are supported.
+
+Both JSON and YAML formats are supported.
 
 ### Run CLI example
 ```bash
 node bin/run.js https://raw.githubusercontent.com/OAI/OpenAPI-Specification/master/examples/v3.0/petstore.yaml
 ```
 
-```json
+```javascript
 {
   "Pet": {
     "type": "object",
@@ -74,22 +76,13 @@ node bin/run.js https://raw.githubusercontent.com/OAI/OpenAPI-Specification/mast
 }
 ```
 
-### Test (*nix)
+### Test
 ```bash
 node_modules/.bin/jest
 # or
 docker run -it --rm -v "$PWD":/usr/src/app -w /usr/src/app node:10 node_modules/.bin/jest
 docker run -it --rm -v "$PWD":/usr/src/app -w /usr/src/app node:12 node_modules/.bin/jest
 docker run -it --rm -v "$PWD":/usr/src/app -w /usr/src/app node:14 node_modules/.bin/jest
-```
-
-### Test (Windows)
-```bat
-node_modules\.bin\jest.cmd
-REM or
-docker run -it --rm -v %cd%:/usr/src/app -w /usr/src/app node:10 node_modules/.bin/jest
-docker run -it --rm -v %cd%:/usr/src/app -w /usr/src/app node:12 node_modules/.bin/jest
-docker run -it --rm -v %cd%:/usr/src/app -w /usr/src/app node:14 node_modules/.bin/jest
 ```
 
 ### Dependencies:
