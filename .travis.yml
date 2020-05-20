@@ -1,8 +1,10 @@
 language: node_js
 node_js:
-  - 10
-  - 12
-  - 14
+  - '10'
+  - '12'
+  - '14'
 install:
   - yarn
 script: node_modules/.bin/jest
+after_success:
+- travis_retry node_modules/.bin/jest --coverage && node_modules/.bin/coveralls < coverage/lcov.info

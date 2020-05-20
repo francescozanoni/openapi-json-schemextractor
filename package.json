@@ -23,6 +23,7 @@
   },
   "devDependencies": {
     "app-root-path": "^3.0.0",
+    "coveralls": "^3.1.0",
     "jest": "^26.0.1",
     "oas-schemas": "https://github.com/OAI/OpenAPI-Specification"
   }
