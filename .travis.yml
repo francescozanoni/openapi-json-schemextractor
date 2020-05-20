@@ -3,4 +3,4 @@ node_js:
   - 10
 install:
   - yarn
-script: yarn test
+script: node_modules/.bin/jest
