@@ -2,6 +2,7 @@
 
 const Converter = require("../lib/index");
 const fs = require("fs");
+const appRoot = require("app-root-path");
 
 describe("fromFile", () => {
 
@@ -69,21 +70,21 @@ describe("fromFile", () => {
     };
 
     test("petstore.yaml v2.0", async () => {
-        let schemaFilePath = "node_modules/oas-schemas/examples/v2.0/yaml/petstore.yaml";
+        let schemaFilePath = appRoot + "/node_modules/oas-schemas/examples/v2.0/yaml/petstore.yaml";
         await expect(Converter.fromFile(schemaFilePath))
             .resolves
             .toStrictEqual(result);
     });
 
     test("petstore.json v2.0", async () => {
-        let schemaFilePath = "node_modules/oas-schemas/examples/v2.0/json/petstore.json";
+        let schemaFilePath = appRoot + "/node_modules/oas-schemas/examples/v2.0/json/petstore.json";
         await expect(Converter.fromFile(schemaFilePath))
             .resolves
             .toStrictEqual(result);
     });
 
     test("petstore.yaml v3.0", async () => {
-        let schemaFilePath = "node_modules/oas-schemas/examples/v3.0/petstore.yaml";
+        let schemaFilePath = appRoot + "/node_modules/oas-schemas/examples/v3.0/petstore.yaml";
         await expect(Converter.fromFile(schemaFilePath))
             .resolves
             .toStrictEqual(result);
@@ -137,21 +138,21 @@ describe("fromFile without some keys", () => {
     ];
 
     test("petstore.yaml v2.0", async () => {
-        let schemaFilePath = "node_modules/oas-schemas/examples/v2.0/yaml/petstore.yaml";
+        let schemaFilePath = appRoot + "/node_modules/oas-schemas/examples/v2.0/yaml/petstore.yaml";
         await expect(Converter.fromFile(schemaFilePath, keysToRemove))
             .resolves
             .toStrictEqual(result);
     });
 
     test("petstore.json v2.0", async () => {
-        let schemaFilePath = "node_modules/oas-schemas/examples/v2.0/json/petstore.json";
+        let schemaFilePath = appRoot + "/node_modules/oas-schemas/examples/v2.0/json/petstore.json";
         await expect(Converter.fromFile(schemaFilePath, keysToRemove))
             .resolves
             .toStrictEqual(result);
     });
 
     test("petstore.yaml v3.0", async () => {
-        let schemaFilePath = "node_modules/oas-schemas/examples/v3.0/petstore.yaml";
+        let schemaFilePath = appRoot + "/node_modules/oas-schemas/examples/v3.0/petstore.yaml";
         await expect(Converter.fromFile(schemaFilePath, keysToRemove))
             .resolves
             .toStrictEqual(result);
@@ -225,7 +226,7 @@ describe("fromObject", () => {
     };
 
     test("petstore.json v2.0", async () => {
-        let schemaObject = require("../node_modules/oas-schemas/examples/v2.0/json/petstore.json");
+        let schemaObject = require(appRoot + "/node_modules/oas-schemas/examples/v2.0/json/petstore.json");
         await expect(Converter.fromObject(schemaObject))
             .resolves
             .toStrictEqual(result);
@@ -298,13 +299,28 @@ describe("fromString", () => {
         }
     };
 
-    test("petstore.json v2.0", async () => {
-        fs.readFile("file://../node_modules/oas-schemas/examples/v2.0/json/petstore.json", null, async function(error, schemaStringBuffer) {
-            await expect(Converter.fromString(schemaStringBuffer.toString()))
-                .resolves
-                .toStrictEqual(result);
-        });
+    test("petstore.yaml v2.0", async () => {
+        const schemaStringBuffer = fs.readFileSync(appRoot + "/node_modules/oas-schemas/examples/v2.0/yaml/petstore.yaml");
+        const schemaString = schemaStringBuffer.toString();
+        await expect(Converter.fromString(schemaString))
+            .resolves
+            .toStrictEqual(result);
+    });
 
+    test("petstore.json v2.0", async () => {
+        const schemaStringBuffer = fs.readFileSync(appRoot + "/node_modules/oas-schemas/examples/v2.0/json/petstore.json");
+        const schemaString = schemaStringBuffer.toString();
+        await expect(Converter.fromString(schemaString))
+            .resolves
+            .toStrictEqual(result);
+    });
+
+    test("petstore.yaml v3.0", async () => {
+        const schemaStringBuffer = fs.readFileSync(appRoot + "/node_modules/oas-schemas/examples/v3.0/petstore.yaml");
+        const schemaString = schemaStringBuffer.toString();
+        await expect(Converter.fromString(schemaString))
+            .resolves
+            .toStrictEqual(result);
     });
 
 });
