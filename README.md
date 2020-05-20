@@ -79,13 +79,17 @@ node bin/run.js https://raw.githubusercontent.com/OAI/OpenAPI-Specification/mast
 node_modules/.bin/jest
 # or
 docker run -it --rm -v "$PWD":/usr/src/app -w /usr/src/app node:10 node_modules/.bin/jest
+docker run -it --rm -v "$PWD":/usr/src/app -w /usr/src/app node:12 node_modules/.bin/jest
+docker run -it --rm -v "$PWD":/usr/src/app -w /usr/src/app node:14 node_modules/.bin/jest
 ```
 
 ### Test (Windows)
 ```bat
 node_modules\.bin\jest.cmd
-# or
+REM or
 docker run -it --rm -v %cd%:/usr/src/app -w /usr/src/app node:10 node_modules/.bin/jest
+docker run -it --rm -v %cd%:/usr/src/app -w /usr/src/app node:12 node_modules/.bin/jest
+docker run -it --rm -v %cd%:/usr/src/app -w /usr/src/app node:14 node_modules/.bin/jest
 ```
 
 ### Dependencies:
