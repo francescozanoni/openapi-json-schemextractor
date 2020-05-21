@@ -1,6 +1,7 @@
 "use strict";
 
-const helpers = require("../lib/helpers");
+const appRoot = require("app-root-path");
+const helpers = require(appRoot + "/lib/helpers");
 
 describe("removeKeyFromObject", () => {
 
@@ -101,6 +102,20 @@ describe("removeKeyFromObject", () => {
             helpers.removeKeyFromObject(before, null);
         })
             .toThrow(/^Invalid input keyToRemove: null$/);
+    });
+
+});
+
+describe("isFilePathReadable", () => {
+
+    test("yes", () => {
+        expect(helpers.isFilePathReadable(appRoot + "/package.json"))
+            .toStrictEqual(true);
+    });
+
+    test("no", () => {
+        expect(helpers.isFilePathReadable(appRoot + "/a"))
+            .toStrictEqual(false);
     });
 
 });

@@ -2,9 +2,9 @@
 
 Convert [OpenAPI](https://swagger.io/docs/specification/about) model schemas to [JSON schema](https://json-schema.org)s.
 
-Both OpenAPI 2 (a.k.a. Swagger) and OpenAPI 3 specifications are supported.
+Both [OpenAPI 2](https://swagger.io/docs/specification/2-0) (a.k.a. Swagger) and [OpenAPI 3](https://swagger.io/docs/specification) specifications are supported.
 
-Both JSON and YAML formats are supported.
+Both [JSON](https://www.json.org) and [YAML](https://yaml.org) formats are supported.
 
 ### Run CLI example
 ```bash
@@ -80,9 +80,9 @@ node bin/run.js https://raw.githubusercontent.com/OAI/OpenAPI-Specification/mast
 ```bash
 node_modules/.bin/jest
 # or
-docker run -it --rm -v "$PWD":/usr/src/app -w /usr/src/app node:10 node_modules/.bin/jest
-docker run -it --rm -v "$PWD":/usr/src/app -w /usr/src/app node:12 node_modules/.bin/jest
-docker run -it --rm -v "$PWD":/usr/src/app -w /usr/src/app node:14 node_modules/.bin/jest
+docker run --rm -v "$PWD":/usr/src/app -w /usr/src/app node:10 node_modules/.bin/jest
+docker run --rm -v "$PWD":/usr/src/app -w /usr/src/app node:12 node_modules/.bin/jest
+docker run --rm -v "$PWD":/usr/src/app -w /usr/src/app node:14 node_modules/.bin/jest
 ```
 
 ### Dependencies:
