@@ -89,19 +89,26 @@ describe("removeKeyFromObject", () => {
             .toThrow(/^Invalid input object: \["a","b","c"\]$/);
     });
 
-    test("invalid key (numeric)", () => {
+    test("invalid keyToRemove (numeric)", () => {
         expect(() => {
             helpers.removeKeyFromObject(before, 1);
         })
             .toThrow(/^Invalid input keyToRemove: 1$/);
     });
 
-    test("invalid key (null)", () => {
+    test("invalid keyToRemove (null)", () => {
         // https://stackoverflow.com/questions/46042613/how-to-test-type-of-thrown-exception-in-jest
         expect(() => {
             helpers.removeKeyFromObject(before, null);
         })
             .toThrow(/^Invalid input keyToRemove: null$/);
+    });
+
+    test("invalid valuesToCheck (null)", () => {
+        expect(() => {
+            helpers.removeKeyFromObject(before, "b", null);
+        })
+            .toThrow(/^Invalid input valuesToCheck: null$/);
     });
 
 });
