@@ -19,6 +19,7 @@
     "@openapi-contrib/openapi-schema-to-json-schema": "^3.0.0",
     "json-schema-merge-allof": "^0.7.0",
     "underscore": "^1.10.2",
+    "url-exist": "^2.0.2",
     "yamljs": "^0.3.0"
   },
   "devDependencies": {

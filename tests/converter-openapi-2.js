@@ -125,13 +125,6 @@ describe("fromFile", () => {
             .toStrictEqual(result);
     });
 
-    test("petstore.yaml v3.0", async () => {
-        let schemaFilePath = appRoot + "/node_modules/oas-schemas/examples/v3.0/petstore.yaml";
-        await expect(Converter.fromFile(schemaFilePath))
-            .resolves
-            .toStrictEqual(result);
-    });
-
     test("inexistent file path", async () => {
         let schemaFilePath = appRoot + "/petstore.yaml";
         await expect(Converter.fromFile(schemaFilePath))
@@ -164,15 +157,8 @@ describe("fromFile without some keys", () => {
             .toStrictEqual(resultWithoutRemovedKeys);
     });
 
-    test("petstore.yaml v3.0", async () => {
-        let schemaFilePath = appRoot + "/node_modules/oas-schemas/examples/v3.0/petstore.yaml";
-        await expect(Converter.fromFile(schemaFilePath, keysToRemove))
-            .resolves
-            .toStrictEqual(resultWithoutRemovedKeys);
-    });
-
     test("invalid keysToRemove", async () => {
-        let schemaFilePath = appRoot + "/node_modules/oas-schemas/examples/v3.0/petstore.yaml";
+        let schemaFilePath = appRoot + "/node_modules/oas-schemas/examples/v2.0/yaml/petstore.yaml";
         await expect(Converter.fromFile(schemaFilePath, 123))
             .rejects
             .toStrictEqual(Error("Invalid input keysToRemove"));
@@ -191,13 +177,6 @@ describe("fromObject", () => {
 
     test("petstore.json v2.0", async () => {
         let schemaObject = require(appRoot + "/node_modules/oas-schemas/examples/v2.0/json/petstore.json");
-        await expect(Converter.fromObject(schemaObject))
-            .resolves
-            .toStrictEqual(result);
-    });
-
-    test("petstore.yaml v3.0", async () => {
-        let schemaObject = YAML.load(appRoot + "/node_modules/oas-schemas/examples/v3.0/petstore.yaml");
         await expect(Converter.fromObject(schemaObject))
             .resolves
             .toStrictEqual(result);
@@ -235,13 +214,6 @@ describe("fromObject without some keys", () => {
             .toStrictEqual(resultWithoutRemovedKeys);
     });
 
-    test("petstore.yaml v3.0", async () => {
-        let schemaObject = YAML.load(appRoot + "/node_modules/oas-schemas/examples/v3.0/petstore.yaml");
-        await expect(Converter.fromObject(schemaObject, keysToRemove))
-            .resolves
-            .toStrictEqual(resultWithoutRemovedKeys);
-    });
-
 });
 
 describe("fromString", () => {
@@ -256,14 +228,6 @@ describe("fromString", () => {
 
     test("petstore.json v2.0", async () => {
         const schemaStringBuffer = fs.readFileSync(appRoot + "/node_modules/oas-schemas/examples/v2.0/json/petstore.json");
-        const schemaString = schemaStringBuffer.toString();
-        await expect(Converter.fromString(schemaString))
-            .resolves
-            .toStrictEqual(result);
-    });
-
-    test("petstore.yaml v3.0", async () => {
-        const schemaStringBuffer = fs.readFileSync(appRoot + "/node_modules/oas-schemas/examples/v3.0/petstore.yaml");
         const schemaString = schemaStringBuffer.toString();
         await expect(Converter.fromString(schemaString))
             .resolves
@@ -291,14 +255,6 @@ describe("fromString without some keys", () => {
 
     test("petstore.json v2.0", async () => {
         const schemaStringBuffer = fs.readFileSync(appRoot + "/node_modules/oas-schemas/examples/v2.0/json/petstore.json");
-        const schemaString = schemaStringBuffer.toString();
-        await expect(Converter.fromString(schemaString, keysToRemove))
-            .resolves
-            .toStrictEqual(resultWithoutRemovedKeys);
-    });
-
-    test("petstore.yaml v3.0", async () => {
-        const schemaStringBuffer = fs.readFileSync(appRoot + "/node_modules/oas-schemas/examples/v3.0/petstore.yaml");
         const schemaString = schemaStringBuffer.toString();
         await expect(Converter.fromString(schemaString, keysToRemove))
             .resolves

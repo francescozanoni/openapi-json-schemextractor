@@ -5,4 +5,4 @@ node_modules/
 # Added manually
 .idea/
 yarn.lock
-.coverage/
+coverage/
