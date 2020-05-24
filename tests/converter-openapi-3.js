@@ -4,6 +4,8 @@ const Converter = require("../lib/index");
 const fs = require("fs");
 const appRoot = require("app-root-path");
 const YAML = require("yamljs");
+const nock = require('nock')
+
 
 const result = {
     "/pets/{petId}_get_petId": {
@@ -129,7 +131,7 @@ const resultWithoutRemovedKeys = {
 
 describe("fromFile", () => {
 
-    test("petstore.yaml v3.0", async () => {
+    test("local petstore.yaml v3.0", async () => {
         let schemaFilePath = appRoot + "/node_modules/oas-schemas/examples/v3.0/petstore.yaml";
         await expect(Converter.fromFile(schemaFilePath))
             .resolves
@@ -148,6 +150,34 @@ describe("fromFile", () => {
         await expect(Converter.fromFile(schemaFilePath))
             .rejects
             .toStrictEqual(Error("Input schema file path is not a string"));
+    });
+  
+  test("remote petstore.yaml v3.0", async () => {
+  const schemaStringBuffer = fs.readFileSync(appRoot + "/node_modules/oas-schemas/examples/v3.0/petstore.yaml");
+    const schemaString = schemaStringBuffer.toString();
+    nock("https://raw.githubusercontent.com")
+     .get("/OAI/OpenAPI-Specification/master/examples/v3.0/petstore.yaml")
+     .reply(200, schemaString);
+  nock("https://raw.githubusercontent.com")
+     .head("/OAI/OpenAPI-Specification/master/examples/v3.0/petstore.yaml")
+     .reply(200, "");
+        let schemaFilePath = "https://raw.githubusercontent.com/OAI/OpenAPI-Specification/master/examples/v3.0/petstore.yaml";
+        await expect(Converter.fromFile(schemaFilePath))
+            .resolves
+            .toStrictEqual(result);
+    });
+    
+    test("invalid URL", async () => {
+    nock("https://raw.githubusercontent.com")
+     .get("/OAI/OpenAPI-Specification/master/examples/v3.0/nooooo.yaml")
+     .reply(404, "");
+  nock("https://raw.githubusercontent.com")
+     .head("/OAI/OpenAPI-Specification/master/examples/v3.0/nooooo.yaml")
+     .reply(404, "");
+        let schemaFilePath = "https://raw.githubusercontent.com/OAI/OpenAPI-Specification/master/examples/v3.0/nooooo.yaml";
+        await expect(Converter.fromFile(schemaFilePath))
+            .rejects
+            .toStrictEqual(Error("Schema file path not found"));
     });
 
 });

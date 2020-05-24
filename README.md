@@ -5,19 +5,28 @@ Convert [OpenAPI](https://swagger.io/docs/specification/about) model schemas to 
 - both [OpenAPI 2](https://swagger.io/docs/specification/2-0) (a.k.a. Swagger) and [OpenAPI 3](https://swagger.io/docs/specification) specifications are supported;
 - both [JSON](https://www.json.org) and [YAML](https://yaml.org) formats are supported;
 - model schemas are extracted from `definitions` section (OpenAPI 2) and both `parameters` and `components.schemas` sections (OpenAPI 3);
-- extracted JSON schemas are plain objects: no `$ref`, `allOf` elements.
+- extracted [JSON schema](https://json-schema.org)s are plain schemas: no `$ref`, `allOf` elements.
+
+Input [OpenAPI](https://swagger.io/docs/specification/about) schema can be supplied as:
+
+- file path,
+- URL,
+- string,
+- JavaScript object.
 
 ### Code example
 ```javascript
 const Converter = require("openapi-models-to-json-schemas");
 
-const schemaPath = "https://raw.githubusercontent.com/OAI/OpenAPI-Specification/master/examples/v3.0/petstore.yaml";
-
 (async function () {
 
-    const jsonSchemas = await Converter.fromFile(schemaPath);
+    const schemasFromLocalFile = await Converter.fromFile("path/to/openapi.yaml");
 
-    console.log(JSON.stringify(jsonSchemas, null, 2));
+    const schemasFromUrl = await Converter.fromFile("https://api.example.com/openapi.yaml");
+    
+    const schemasFromString = await Converter.fromString("...");
+    
+    const schemasFromObject = await Converter.fromObject({/* ... */});
 
 })();
 ```
