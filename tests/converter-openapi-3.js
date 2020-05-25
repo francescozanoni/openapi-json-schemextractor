@@ -1,11 +1,13 @@
 "use strict";
 
-const Converter = require("../lib/index");
-const fs = require("fs");
-const appRoot = require("app-root-path");
 const YAML = require("yamljs");
-const nock = require('nock')
+const nock = require('nock');
+const appRoot = require("app-root-path");
+const Converter = require(appRoot + "/lib/index");
+const helpers = require(appRoot + "/lib/helpers");
 
+const schemaLocalFilePath = appRoot + "/node_modules/oas-schemas/examples/v3.0/petstore.yaml";
+const schemaInexistentFilePath = appRoot + "/petstore.yaml";
 
 const result = {
     "/pets/{petId}_get_petId": {
@@ -132,15 +134,13 @@ const resultWithoutRemovedKeys = {
 describe("fromFile", () => {
 
     test("local petstore.yaml v3.0", async () => {
-        let schemaFilePath = appRoot + "/node_modules/oas-schemas/examples/v3.0/petstore.yaml";
-        await expect(Converter.fromFile(schemaFilePath))
+        await expect(Converter.fromFile(schemaLocalFilePath))
             .resolves
             .toStrictEqual(result);
     });
 
     test("inexistent file path", async () => {
-        let schemaFilePath = appRoot + "/petstore.yaml";
-        await expect(Converter.fromFile(schemaFilePath))
+        await expect(Converter.fromFile(schemaInexistentFilePath))
             .rejects
             .toStrictEqual(Error("Schema file path not found"));
     });
@@ -151,30 +151,37 @@ describe("fromFile", () => {
             .rejects
             .toStrictEqual(Error("Input schema file path is not a string"));
     });
-  
-  test("remote petstore.yaml v3.0", async () => {
-  const schemaStringBuffer = fs.readFileSync(appRoot + "/node_modules/oas-schemas/examples/v3.0/petstore.yaml");
-    const schemaString = schemaStringBuffer.toString();
-    nock("https://raw.githubusercontent.com")
-     .get("/OAI/OpenAPI-Specification/master/examples/v3.0/petstore.yaml")
-     .reply(200, schemaString);
-  nock("https://raw.githubusercontent.com")
-     .head("/OAI/OpenAPI-Specification/master/examples/v3.0/petstore.yaml")
-     .reply(200, "");
-        let schemaFilePath = "https://raw.githubusercontent.com/OAI/OpenAPI-Specification/master/examples/v3.0/petstore.yaml";
+
+    test("remote petstore.yaml v3.0", async () => {
+
+        // Mock HTTP server
+        const schemaString = helpers.readFile(schemaLocalFilePath);
+        nock("https://raw.githubusercontent.com")
+            .get("/OAI/OpenAPI-Specification/master/examples/v3.0/petstore.yaml")
+            .reply(200, schemaString);
+        // HEAD method must be mocked because it's used by url-exist package
+        nock("https://raw.githubusercontent.com")
+            .head("/OAI/OpenAPI-Specification/master/examples/v3.0/petstore.yaml")
+            .reply(200, "");
+
+        const schemaFilePath = "https://raw.githubusercontent.com/OAI/OpenAPI-Specification/master/examples/v3.0/petstore.yaml";
         await expect(Converter.fromFile(schemaFilePath))
             .resolves
             .toStrictEqual(result);
     });
-    
+
     test("invalid URL", async () => {
-    nock("https://raw.githubusercontent.com")
-     .get("/OAI/OpenAPI-Specification/master/examples/v3.0/nooooo.yaml")
-     .reply(404, "");
-  nock("https://raw.githubusercontent.com")
-     .head("/OAI/OpenAPI-Specification/master/examples/v3.0/nooooo.yaml")
-     .reply(404, "");
-        let schemaFilePath = "https://raw.githubusercontent.com/OAI/OpenAPI-Specification/master/examples/v3.0/nooooo.yaml";
+
+        // Mock HTTP server
+        nock("https://raw.githubusercontent.com")
+            .get("/OAI/OpenAPI-Specification/master/examples/v3.0/nooooo.yaml")
+            .reply(404, "");
+        // HEAD method must be mocked because it's used by url-exist package
+        nock("https://raw.githubusercontent.com")
+            .head("/OAI/OpenAPI-Specification/master/examples/v3.0/nooooo.yaml")
+            .reply(404, "");
+
+        const schemaFilePath = "https://raw.githubusercontent.com/OAI/OpenAPI-Specification/master/examples/v3.0/nooooo.yaml";
         await expect(Converter.fromFile(schemaFilePath))
             .rejects
             .toStrictEqual(Error("Schema file path not found"));
@@ -185,15 +192,13 @@ describe("fromFile", () => {
 describe("fromFile without some keys", () => {
 
     test("petstore.yaml v3.0", async () => {
-        let schemaFilePath = appRoot + "/node_modules/oas-schemas/examples/v3.0/petstore.yaml";
-        await expect(Converter.fromFile(schemaFilePath, keysToRemove))
+        await expect(Converter.fromFile(schemaLocalFilePath, keysToRemove))
             .resolves
             .toStrictEqual(resultWithoutRemovedKeys);
     });
 
     test("invalid keysToRemove", async () => {
-        let schemaFilePath = appRoot + "/node_modules/oas-schemas/examples/v3.0/petstore.yaml";
-        await expect(Converter.fromFile(schemaFilePath, 123))
+        await expect(Converter.fromFile(schemaLocalFilePath, 123))
             .rejects
             .toStrictEqual(Error("Invalid input keysToRemove"));
     });
@@ -203,7 +208,7 @@ describe("fromFile without some keys", () => {
 describe("fromObject", () => {
 
     test("petstore.yaml v3.0", async () => {
-        let schemaObject = YAML.load(appRoot + "/node_modules/oas-schemas/examples/v3.0/petstore.yaml");
+        let schemaObject = YAML.load(schemaLocalFilePath);
         await expect(Converter.fromObject(schemaObject))
             .resolves
             .toStrictEqual(result);
@@ -228,7 +233,7 @@ describe("fromObject", () => {
 describe("fromObject without some keys", () => {
 
     test("petstore.yaml v3.0", async () => {
-        let schemaObject = YAML.load(appRoot + "/node_modules/oas-schemas/examples/v3.0/petstore.yaml");
+        let schemaObject = YAML.load(schemaLocalFilePath);
         await expect(Converter.fromObject(schemaObject, keysToRemove))
             .resolves
             .toStrictEqual(resultWithoutRemovedKeys);
@@ -239,8 +244,7 @@ describe("fromObject without some keys", () => {
 describe("fromString", () => {
 
     test("petstore.yaml v3.0", async () => {
-        const schemaStringBuffer = fs.readFileSync(appRoot + "/node_modules/oas-schemas/examples/v3.0/petstore.yaml");
-        const schemaString = schemaStringBuffer.toString();
+        const schemaString = helpers.readFile(schemaLocalFilePath);
         await expect(Converter.fromString(schemaString))
             .resolves
             .toStrictEqual(result);
@@ -258,8 +262,7 @@ describe("fromString", () => {
 describe("fromString without some keys", () => {
 
     test("petstore.yaml v3.0", async () => {
-        const schemaStringBuffer = fs.readFileSync(appRoot + "/node_modules/oas-schemas/examples/v3.0/petstore.yaml");
-        const schemaString = schemaStringBuffer.toString();
+        const schemaString = helpers.readFile(schemaLocalFilePath);
         await expect(Converter.fromString(schemaString, keysToRemove))
             .resolves
             .toStrictEqual(resultWithoutRemovedKeys);

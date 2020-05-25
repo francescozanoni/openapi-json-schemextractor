@@ -9,10 +9,10 @@ Convert [OpenAPI](https://swagger.io/docs/specification/about) model schemas to 
 
 Input [OpenAPI](https://swagger.io/docs/specification/about) schema can be supplied as:
 
-- file path,
-- URL,
-- string,
-- JavaScript object.
+- file path
+- URL
+- string
+- JavaScript object
 
 ### Code example
 ```javascript

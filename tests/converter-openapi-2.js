@@ -1,9 +1,9 @@
 "use strict";
 
-const Converter = require("../lib/index");
-const fs = require("fs");
-const appRoot = require("app-root-path");
 const YAML = require("yamljs");
+const appRoot = require("app-root-path");
+const Converter = require(appRoot + "/lib/index");
+const helpers = require(appRoot + "/lib/helpers");
 
 const result = {
     Error: {
@@ -219,16 +219,14 @@ describe("fromObject without some keys", () => {
 describe("fromString", () => {
 
     test("petstore.yaml v2.0", async () => {
-        const schemaStringBuffer = fs.readFileSync(appRoot + "/node_modules/oas-schemas/examples/v2.0/yaml/petstore.yaml");
-        const schemaString = schemaStringBuffer.toString();
+        const schemaString = helpers.readFile(appRoot + "/node_modules/oas-schemas/examples/v2.0/yaml/petstore.yaml");
         await expect(Converter.fromString(schemaString))
             .resolves
             .toStrictEqual(result);
     });
 
     test("petstore.json v2.0", async () => {
-        const schemaStringBuffer = fs.readFileSync(appRoot + "/node_modules/oas-schemas/examples/v2.0/json/petstore.json");
-        const schemaString = schemaStringBuffer.toString();
+        const schemaString = helpers.readFile(appRoot + "/node_modules/oas-schemas/examples/v2.0/json/petstore.json");
         await expect(Converter.fromString(schemaString))
             .resolves
             .toStrictEqual(result);
@@ -246,16 +244,14 @@ describe("fromString", () => {
 describe("fromString without some keys", () => {
 
     test("petstore.yaml v2.0", async () => {
-        const schemaStringBuffer = fs.readFileSync(appRoot + "/node_modules/oas-schemas/examples/v2.0/yaml/petstore.yaml");
-        const schemaString = schemaStringBuffer.toString();
+        const schemaString = helpers.readFile(appRoot + "/node_modules/oas-schemas/examples/v2.0/yaml/petstore.yaml");
         await expect(Converter.fromString(schemaString, keysToRemove))
             .resolves
             .toStrictEqual(resultWithoutRemovedKeys);
     });
 
     test("petstore.json v2.0", async () => {
-        const schemaStringBuffer = fs.readFileSync(appRoot + "/node_modules/oas-schemas/examples/v2.0/json/petstore.json");
-        const schemaString = schemaStringBuffer.toString();
+        const schemaString = helpers.readFile(appRoot + "/node_modules/oas-schemas/examples/v2.0/json/petstore.json");
         await expect(Converter.fromString(schemaString, keysToRemove))
             .resolves
             .toStrictEqual(resultWithoutRemovedKeys);

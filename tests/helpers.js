@@ -26,10 +26,10 @@ describe("removeKeyFromObject", () => {
             c: {
                 a: 3
             },
-        z: [
-            5,
-            {}
-        ]
+            z: [
+                5,
+                {}
+            ]
         };
         expect(helpers.removeKeyFromObject(before, "b"))
             .toStrictEqual(after);
@@ -42,12 +42,12 @@ describe("removeKeyFromObject", () => {
             c: {
                 a: 3
             },
-        z: [
-            5,
-            {
-                b: 5
-            }
-        ]
+            z: [
+                5,
+                {
+                    b: 5
+                }
+            ]
         };
         expect(helpers.removeKeyFromObject(before, "b", [4]))
             .toStrictEqual(after);
@@ -59,12 +59,12 @@ describe("removeKeyFromObject", () => {
             c: {
                 a: 3
             },
-        z: [
-            5,
-            {
-                b: 5
-            }
-        ]
+            z: [
+                5,
+                {
+                    b: 5
+                }
+            ]
         };
         expect(helpers.removeKeyFromObject(before, "b", [2, 4, 1]))
             .toStrictEqual(after);
