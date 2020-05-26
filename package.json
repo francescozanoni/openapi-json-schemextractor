@@ -16,6 +16,9 @@
   ],
   "author": "Francesco Zanoni <francescozanoni81@gmail.com>",
   "license": "MIT",
+  "scripts": {
+    "test": "jest"
+  },
   "dependencies": {
     "@apidevtools/json-schema-ref-parser": "^9.0.1",
     "@openapi-contrib/openapi-schema-to-json-schema": "^3.0.0",
