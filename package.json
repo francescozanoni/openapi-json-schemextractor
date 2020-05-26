@@ -1,16 +1,18 @@
 {
-  "name": "openapi-models-to-json-schemas",
-  "description": "Convert OpenAPI model schemas to JSON schemas",
+  "name": "openapi-json-schemextractor",
+  "description": "Extract real JSON schemas from OpenAPI definitions",
   "version": "1.0.0",
   "main": "lib/index.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/francescozanoni/openapi-models-to-json-schemas.git"
+    "url": "https://github.com/francescozanoni/openapi-json-schemextractor.git"
   },
   "keywords": [
     "openapi",
     "swagger",
-    "json-schema"
+    "json-schema",
+    "extractor",
+    "converter"
   ],
   "author": "Francesco Zanoni <francescozanoni81@gmail.com>",
   "license": "MIT",

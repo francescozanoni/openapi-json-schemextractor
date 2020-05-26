@@ -1,4 +1,4 @@
-# openapi-models-to-json-schemas [![Build Status](https://travis-ci.org/francescozanoni/openapi-models-to-json-schemas.svg?branch=master)](https://travis-ci.org/francescozanoni/openapi-models-to-json-schemas) [![Coverage Status](https://coveralls.io/repos/github/francescozanoni/openapi-models-to-json-schemas/badge.svg?branch=master&service=github)](https://coveralls.io/github/francescozanoni/openapi-models-to-json-schemas?branch=master&service=github)
+# openapi-json-schemextractor [![Build Status](https://travis-ci.org/francescozanoni/openapi-json-schemextractor.svg?branch=master)](https://travis-ci.org/francescozanoni/openapi-json-schemextractor) [![Coverage Status](https://coveralls.io/repos/github/francescozanoni/openapi-json-schemextractor/badge.svg?branch=master&service=github)](https://coveralls.io/github/francescozanoni/openapi-json-schemextractor?branch=master&service=github)
 
 Convert [OpenAPI](https://swagger.io/docs/specification/about) model schemas to [JSON schema](https://json-schema.org)s:
 
@@ -16,17 +16,17 @@ Input [OpenAPI](https://swagger.io/docs/specification/about) schema can be suppl
 
 ### Code example
 ```javascript
-const Converter = require("openapi-models-to-json-schemas");
+const SchemExtractor = require("openapi-json-schemextractor");
 
 (async function () {
 
-    const schemasFromLocalFile = await Converter.fromFile("path/to/openapi.yaml");
+    const schemasFromLocalFile = await SchemExtractor.fromFile("path/to/openapi.yaml");
 
-    const schemasFromUrl = await Converter.fromFile("https://api.example.com/openapi.yaml");
+    const schemasFromUrl = await SchemExtractor.fromFile("https://api.example.com/openapi.yaml");
     
-    const schemasFromString = await Converter.fromString("...");
+    const schemasFromString = await SchemExtractor.fromString("...");
     
-    const schemasFromObject = await Converter.fromObject({/* ... */});
+    const schemasFromObject = await SchemExtractor.fromObject({/* ... */});
 
 })();
 ```
