@@ -1,7 +1,6 @@
 {
   "name": "openapi-json-schemextractor",
   "description": "Extract real JSON schemas from OpenAPI definitions",
-  "version": "1.0.0",
   "main": "lib/index.js",
   "repository": {
     "type": "git",
