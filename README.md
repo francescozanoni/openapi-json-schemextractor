@@ -1,6 +1,6 @@
 # openapi-json-schemextractor
 
-[![Build Status](https://travis-ci.org/francescozanoni/openapi-json-schemextractor.svg?branch=master)](https://travis-ci.org/francescozanoni/openapi-json-schemextractor) [![Coverage Status](https://coveralls.io/repos/github/francescozanoni/openapi-json-schemextractor/badge.svg?branch=master&service=github)](https://coveralls.io/github/francescozanoni/openapi-json-schemextractor?branch=master&service=github) [![NPM](https://nodei.co/npm/openapi-json-schemextractor.png?compact=true)](https://nodei.co/npm/openapi-json-schemextractor/)
+[![Build Status](https://travis-ci.org/francescozanoni/openapi-json-schemextractor.svg?branch=master)](https://travis-ci.org/francescozanoni/openapi-json-schemextractor) [![Coverage Status](https://coveralls.io/repos/github/francescozanoni/openapi-json-schemextractor/badge.svg?branch=master&service=github)](https://coveralls.io/github/francescozanoni/openapi-json-schemextractor?branch=master&service=github) [![NPM](https://nodei.co/npm/openapi-json-schemextractor.png?mini=true)](https://nodei.co/npm/openapi-json-schemextractor/)
 
 Extract anything defined via a schema from [OpenAPI](https://swagger.io/docs/specification/about) schemas as standard [JSON schema](https://json-schema.org)s:
 
