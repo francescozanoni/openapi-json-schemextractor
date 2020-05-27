@@ -134,17 +134,3 @@ describe("removeKeyFromObject", () => {
     });
 
 });
-
-describe("isFilePathReadable", () => {
-
-    test("yes", () => {
-        expect(helpers.isFilePathReadable(appRoot + "/package.json"))
-            .toStrictEqual(true);
-    });
-
-    test("no", () => {
-        expect(helpers.isFilePathReadable(appRoot + "/a"))
-            .toStrictEqual(false);
-    });
-
-});

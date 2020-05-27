@@ -1,0 +1,221 @@
+{
+  "result": {
+    "Error": {
+      "$schema": "http://json-schema.org/draft-04/schema#",
+      "properties": {
+        "code": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "message": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "code",
+        "message"
+      ],
+      "type": "object"
+    },
+    "Pet": {
+      "$schema": "http://json-schema.org/draft-04/schema#",
+      "properties": {
+        "id": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "name": {
+          "type": "string"
+        },
+        "tag": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "name"
+      ],
+      "type": "object"
+    },
+    "Pets": {
+      "$schema": "http://json-schema.org/draft-04/schema#",
+      "items": {
+        "properties": {
+          "id": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "name": {
+            "type": "string"
+          },
+          "tag": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "name"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    }
+  },
+  "resultWithParameters": {
+    "Error": {
+      "$schema": "http://json-schema.org/draft-04/schema#",
+      "properties": {
+        "code": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "message": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "code",
+        "message"
+      ],
+      "type": "object"
+    },
+    "Pet": {
+      "$schema": "http://json-schema.org/draft-04/schema#",
+      "properties": {
+        "id": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "name": {
+          "type": "string"
+        },
+        "tag": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "name"
+      ],
+      "type": "object"
+    },
+    "Pets": {
+      "$schema": "http://json-schema.org/draft-04/schema#",
+      "items": {
+        "properties": {
+          "id": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "name": {
+            "type": "string"
+          },
+          "tag": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "name"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "/pets/{petId}_get_petId": {
+      "$schema": "http://json-schema.org/draft-04/schema#",
+      "type": "string"
+    },
+    "/pets_get_limit": {
+      "$schema": "http://json-schema.org/draft-04/schema#",
+      "format": "int32",
+      "type": "integer"
+    }
+  },
+  "keysToRemove": [
+    "tag",
+    "Pets",
+    "error"
+  ],
+  "resultWithoutRemovedKeys": {
+    "Error": {
+      "$schema": "http://json-schema.org/draft-04/schema#",
+      "properties": {
+        "code": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "message": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "code",
+        "message"
+      ],
+      "type": "object"
+    },
+    "Pet": {
+      "$schema": "http://json-schema.org/draft-04/schema#",
+      "properties": {
+        "id": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "name": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "name"
+      ],
+      "type": "object"
+    }
+  },
+  "resultWithParametersWithoutRemovedKeys": {
+    "Error": {
+      "$schema": "http://json-schema.org/draft-04/schema#",
+      "properties": {
+        "code": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "message": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "code",
+        "message"
+      ],
+      "type": "object"
+    },
+    "Pet": {
+      "$schema": "http://json-schema.org/draft-04/schema#",
+      "properties": {
+        "id": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "name": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "name"
+      ],
+      "type": "object"
+    },
+    "/pets/{petId}_get_petId": {
+      "$schema": "http://json-schema.org/draft-04/schema#",
+      "type": "string"
+    },
+    "/pets_get_limit": {
+      "$schema": "http://json-schema.org/draft-04/schema#",
+      "format": "int32",
+      "type": "integer"
+    }
+  }
+}
