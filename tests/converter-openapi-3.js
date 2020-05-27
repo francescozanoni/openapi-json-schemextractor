@@ -2,8 +2,9 @@
 
 const YAML = require("yamljs");
 const nock = require('nock');
+
 const appRoot = require("app-root-path");
-const Converter = require(appRoot + "/lib/index");
+const SchemExtractor = require(appRoot + "/lib/index");
 const helpers = require(appRoot + "/lib/helpers");
 
 const schemaLocalFilePath = appRoot + "/node_modules/oas-schemas/examples/v3.0/petstore.yaml";
@@ -134,20 +135,20 @@ const resultWithoutRemovedKeys = {
 describe("fromFile", () => {
 
     test("local petstore.yaml v3.0", async () => {
-        await expect(Converter.fromFile(schemaLocalFilePath))
+        await expect(SchemExtractor.fromFile(schemaLocalFilePath))
             .resolves
             .toStrictEqual(result);
     });
 
     test("inexistent file path", async () => {
-        await expect(Converter.fromFile(schemaInexistentFilePath))
+        await expect(SchemExtractor.fromFile(schemaInexistentFilePath))
             .rejects
             .toStrictEqual(Error("Schema file path not found"));
     });
 
     test("invalid file path (number)", async () => {
         let schemaFilePath = 123;
-        await expect(Converter.fromFile(schemaFilePath))
+        await expect(SchemExtractor.fromFile(schemaFilePath))
             .rejects
             .toStrictEqual(Error("Input schema file path is not a string"));
     });
@@ -165,7 +166,7 @@ describe("fromFile", () => {
             .reply(200, "");
 
         const schemaFilePath = "https://raw.githubusercontent.com/OAI/OpenAPI-Specification/master/examples/v3.0/petstore.yaml";
-        await expect(Converter.fromFile(schemaFilePath))
+        await expect(SchemExtractor.fromFile(schemaFilePath))
             .resolves
             .toStrictEqual(result);
     });
@@ -182,7 +183,7 @@ describe("fromFile", () => {
             .reply(404, "");
 
         const schemaFilePath = "https://raw.githubusercontent.com/OAI/OpenAPI-Specification/master/examples/v3.0/nooooo.yaml";
-        await expect(Converter.fromFile(schemaFilePath))
+        await expect(SchemExtractor.fromFile(schemaFilePath))
             .rejects
             .toStrictEqual(Error("Schema file path not found"));
     });
@@ -192,13 +193,13 @@ describe("fromFile", () => {
 describe("fromFile without some keys", () => {
 
     test("petstore.yaml v3.0", async () => {
-        await expect(Converter.fromFile(schemaLocalFilePath, keysToRemove))
+        await expect(SchemExtractor.fromFile(schemaLocalFilePath, keysToRemove))
             .resolves
             .toStrictEqual(resultWithoutRemovedKeys);
     });
 
     test("invalid keysToRemove", async () => {
-        await expect(Converter.fromFile(schemaLocalFilePath, 123))
+        await expect(SchemExtractor.fromFile(schemaLocalFilePath, 123))
             .rejects
             .toStrictEqual(Error("Invalid input keysToRemove"));
     });
@@ -209,21 +210,21 @@ describe("fromObject", () => {
 
     test("petstore.yaml v3.0", async () => {
         let schemaObject = YAML.load(schemaLocalFilePath);
-        await expect(Converter.fromObject(schemaObject))
+        await expect(SchemExtractor.fromObject(schemaObject))
             .resolves
             .toStrictEqual(result);
     });
 
     test("invalid schema object (number)", async () => {
         let schemaObject = 123;
-        await expect(Converter.fromObject(schemaObject))
+        await expect(SchemExtractor.fromObject(schemaObject))
             .rejects
             .toStrictEqual(Error("Input schema is not an object"));
     });
 
     test("invalid schema object (empty object)", async () => {
         let schemaObject = {};
-        await expect(Converter.fromObject(schemaObject))
+        await expect(SchemExtractor.fromObject(schemaObject))
             .rejects
             .toStrictEqual(Error("Invalid input schema: no model schemas found"));
     });
@@ -234,7 +235,7 @@ describe("fromObject without some keys", () => {
 
     test("petstore.yaml v3.0", async () => {
         let schemaObject = YAML.load(schemaLocalFilePath);
-        await expect(Converter.fromObject(schemaObject, keysToRemove))
+        await expect(SchemExtractor.fromObject(schemaObject, keysToRemove))
             .resolves
             .toStrictEqual(resultWithoutRemovedKeys);
     });
@@ -245,14 +246,14 @@ describe("fromString", () => {
 
     test("petstore.yaml v3.0", async () => {
         const schemaString = helpers.readFile(schemaLocalFilePath);
-        await expect(Converter.fromString(schemaString))
+        await expect(SchemExtractor.fromString(schemaString))
             .resolves
             .toStrictEqual(result);
     });
 
     test("invalid schema string (empty)", async () => {
         const schemaString = "";
-        await expect(Converter.fromString(schemaString))
+        await expect(SchemExtractor.fromString(schemaString))
             .rejects
             .toStrictEqual(Error("Expected a file path, URL, or object. Got null"));
     });
@@ -263,7 +264,7 @@ describe("fromString without some keys", () => {
 
     test("petstore.yaml v3.0", async () => {
         const schemaString = helpers.readFile(schemaLocalFilePath);
-        await expect(Converter.fromString(schemaString, keysToRemove))
+        await expect(SchemExtractor.fromString(schemaString, keysToRemove))
             .resolves
             .toStrictEqual(resultWithoutRemovedKeys);
     });

@@ -1,9 +1,9 @@
 "use strict";
 
 const appRoot = require("app-root-path");
-const fixJsonSchema = require(appRoot + "/lib/json-schema-fixer");
+const JSONSchemaManager = require(appRoot + "/lib/json-schema-manager");
 
-describe("fixJsonSchema", () => {
+describe("JSONSchemaManager.fix", () => {
 
     test("type is added to model", () => {
         const before = {
@@ -37,7 +37,7 @@ describe("fixJsonSchema", () => {
             },
             $schema: "http://json-schema.org/draft-04/schema#"
         };
-        expect(fixJsonSchema(before))
+        expect(JSONSchemaManager.fix(before))
             .toStrictEqual(after);
     });
 
@@ -79,7 +79,7 @@ describe("fixJsonSchema", () => {
             },
             $schema: "http://json-schema.org/draft-04/schema#"
         };
-        expect(fixJsonSchema(before))
+        expect(JSONSchemaManager.fix(before))
             .toStrictEqual(after);
     });
 
@@ -117,7 +117,7 @@ describe("fixJsonSchema", () => {
             },
             $schema: "http://json-schema.org/draft-04/schema#"
         };
-        expect(fixJsonSchema(before))
+        expect(JSONSchemaManager.fix(before))
             .toStrictEqual(after);
     });
 

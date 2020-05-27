@@ -1,14 +1,12 @@
-# openapi-json-schemextractor
+# openapi-json-schemextractor [![Build Status](https://travis-ci.org/francescozanoni/openapi-json-schemextractor.svg?branch=master)](https://travis-ci.org/francescozanoni/openapi-json-schemextractor) [![Coverage Status](https://coveralls.io/repos/github/francescozanoni/openapi-json-schemextractor/badge.svg?branch=master&service=github)](https://coveralls.io/github/francescozanoni/openapi-json-schemextractor?branch=master&service=github)
 
-[![Build Status](https://travis-ci.org/francescozanoni/openapi-json-schemextractor.svg?branch=master)](https://travis-ci.org/francescozanoni/openapi-json-schemextractor) [![Coverage Status](https://coveralls.io/repos/github/francescozanoni/openapi-json-schemextractor/badge.svg?branch=master&service=github)](https://coveralls.io/github/francescozanoni/openapi-json-schemextractor?branch=master&service=github) [![NPM](https://nodei.co/npm/openapi-json-schemextractor.png?mini=true)](https://nodei.co/npm/openapi-json-schemextractor/)
-
-Extract anything defined via a schema from [OpenAPI](https://swagger.io/docs/specification/about) schemas as standard [JSON schema](https://json-schema.org)s:
+Extract any entity defined via a schema within [OpenAPI](https://swagger.io/docs/specification/about) schemas as standard [JSON schema](https://json-schema.org)s:
 
 - both [OpenAPI 2](https://swagger.io/docs/specification/2-0) (a.k.a. Swagger) and [OpenAPI 3](https://swagger.io/docs/specification) specifications are supported;
 - both [JSON](https://www.json.org) and [YAML](https://yaml.org) formats are supported;
-- model schemas are extracted from:
-  - `definitions` section (OpenAPI 2),
-  - both `parameters` and `components.schemas` sections (OpenAPI 3);
+- schemas are extracted from:
+  - `definitions` section ([OpenAPI 2](https://swagger.io/docs/specification/2-0)),
+  - both `parameters` and `components.schemas` sections ([OpenAPI 3](https://swagger.io/docs/specification));
 - extracted [JSON schema](https://json-schema.org)s are plain schemas: no `$ref` or `allOf` elements.
 
 Input [OpenAPI](https://swagger.io/docs/specification/about) schema can be supplied as:
@@ -18,12 +16,12 @@ Input [OpenAPI](https://swagger.io/docs/specification/about) schema can be suppl
 - string
 - JavaScript object
 
-### Installation
+## Installation
 ```bash
 yarn add openapi-json-schemextractor
 ```
 
-### Code example
+## Code example
 ```javascript
 const SchemExtractor = require("openapi-json-schemextractor");
 
@@ -37,10 +35,12 @@ const SchemExtractor = require("openapi-json-schemextractor");
 })();
 ```
 
-### CLI example
+## CLI example
 ```bash
 node node_modules/openapi-json-schemextractor/bin/run.js \
      https://raw.githubusercontent.com/OAI/OpenAPI-Specification/master/examples/v3.0/petstore.yaml
+# or
+node node_modules/openapi-json-schemextractor/bin/run.js path/to/openapi.yaml
 ```
 
 ```javascript
@@ -105,6 +105,7 @@ node node_modules/openapi-json-schemextractor/bin/run.js \
     },
     $schema: "http://json-schema.org/draft-04/schema#"
   },
+  // Schemas related to parameters are given unique identifiers.
   "/pets/{petId}_get_petId": {
      $schema: "http://json-schema.org/draft-04/schema#",
      type: "string"
@@ -117,7 +118,7 @@ node node_modules/openapi-json-schemextractor/bin/run.js \
 }
 ```
 
-### Test
+## Test
 ```bash
 yarn test
 # or
