@@ -1,6 +1,6 @@
 {
   "name": "openapi-json-schemextractor",
-  "description": "Extract real JSON schemas from OpenAPI definitions",
+  "description": "Extract standard JSON schemas from OpenAPI definitions",
   "version": "1.0.0",
   "main": "lib/index.js",
   "repository": {
@@ -18,6 +18,9 @@
   "license": "MIT",
   "scripts": {
     "test": "jest"
+  },
+  "engines": {
+    "node": ">=10"
   },
   "dependencies": {
     "@apidevtools/json-schema-ref-parser": "^9.0.1",

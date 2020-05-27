@@ -1,6 +1,6 @@
-# openapi-json-schemextractor [![Build Status](https://travis-ci.org/francescozanoni/openapi-json-schemextractor.svg?branch=master)](https://travis-ci.org/francescozanoni/openapi-json-schemextractor) [![Coverage Status](https://coveralls.io/repos/github/francescozanoni/openapi-json-schemextractor/badge.svg?branch=master&service=github)](https://coveralls.io/github/francescozanoni/openapi-json-schemextractor?branch=master&service=github)
+# openapi-json-schemextractor [![Build Status](https://travis-ci.org/francescozanoni/openapi-json-schemextractor.svg?branch=master)](https://travis-ci.org/francescozanoni/openapi-json-schemextractor) [![Coverage Status](https://coveralls.io/repos/github/francescozanoni/openapi-json-schemextractor/badge.svg?branch=master&service=github)](https://coveralls.io/github/francescozanoni/openapi-json-schemextractor?branch=master&service=github) [![NPM](https://nodei.co/npm/openapi-json-schemextractor.png)](https://nodei.co/npm/openapi-json-schemextractor/)
 
-Extract definitions from [OpenAPI](https://swagger.io/docs/specification/about) schemas and convert to [JSON schema](https://json-schema.org)s:
+Extract anything defined via a schema from [OpenAPI](https://swagger.io/docs/specification/about) schemas as standard [JSON schema](https://json-schema.org)s:
 
 - both [OpenAPI 2](https://swagger.io/docs/specification/2-0) (a.k.a. Swagger) and [OpenAPI 3](https://swagger.io/docs/specification) specifications are supported;
 - both [JSON](https://www.json.org) and [YAML](https://yaml.org) formats are supported;
