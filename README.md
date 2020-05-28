@@ -16,6 +16,10 @@ Input [OpenAPI](https://swagger.io/docs/specification/about) schema can be suppl
 - string
 - JavaScript object
 
+Known limitations:
+
+- currently schemas split over several files are not supported
+
 ## Installation
 ```bash
 yarn add openapi-json-schemextractor
