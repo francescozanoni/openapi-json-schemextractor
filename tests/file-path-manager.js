@@ -1,17 +1,16 @@
 "use strict";
 
-const appRoot = require("app-root-path");
-const FilePathManager = require(appRoot + "/lib/file-path-manager");
+const FilePathManager = require("../lib/file-path-manager");
 
 describe("isFilePathReadable", () => {
 
     test("yes", () => {
-        expect(FilePathManager.isFilePathReadable(appRoot + "/package.json"))
+        expect(FilePathManager.isFilePathReadable("../package.json"))
             .toStrictEqual(true);
     });
 
     test("no", () => {
-        expect(FilePathManager.isFilePathReadable(appRoot + "/a"))
+        expect(FilePathManager.isFilePathReadable("../a"))
             .toStrictEqual(false);
     });
 

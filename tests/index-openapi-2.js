@@ -2,30 +2,29 @@
 
 const yaml = require('js-yaml');
 
-const appRoot = require("app-root-path");
-const SchemExtractor = require(appRoot + "/lib/index");
-const FilePathManager = require(appRoot + "/lib/file-path-manager");
+const SchemExtractor = require("../lib/index");
+const FilePathManager = require("../lib/file-path-manager");
 
-const data = require(appRoot + "/tests/data");
+const data = require("./data");
 
 describe("fromFile", () => {
 
     test("petstore.yaml v2.0", async () => {
-        const schemaFilePath = appRoot + "/node_modules/oas-schemas/examples/v2.0/yaml/petstore.yaml";
+        const schemaFilePath = "./node_modules/oas-schemas/examples/v2.0/yaml/petstore.yaml";
         await expect(SchemExtractor.fromFile(schemaFilePath))
             .resolves
             .toStrictEqual(data.result);
     });
 
     test("petstore.json v2.0", async () => {
-        const schemaFilePath = appRoot + "/node_modules/oas-schemas/examples/v2.0/json/petstore.json";
+        const schemaFilePath = "./node_modules/oas-schemas/examples/v2.0/json/petstore.json";
         await expect(SchemExtractor.fromFile(schemaFilePath))
             .resolves
             .toStrictEqual(data.result);
     });
 
     test("inexistent file path", async () => {
-        const schemaFilePath = appRoot + "/petstore.yaml";
+        const schemaFilePath = "./petstore.yaml";
         await expect(SchemExtractor.fromFile(schemaFilePath))
             .rejects
             .toStrictEqual(Error("Schema file path not found"));
@@ -43,21 +42,21 @@ describe("fromFile", () => {
 describe("fromFile without some keys", () => {
 
     test("petstore.yaml v2.0", async () => {
-        const schemaFilePath = appRoot + "/node_modules/oas-schemas/examples/v2.0/yaml/petstore.yaml";
+        const schemaFilePath = "./node_modules/oas-schemas/examples/v2.0/yaml/petstore.yaml";
         await expect(SchemExtractor.fromFile(schemaFilePath, data.keysToRemove))
             .resolves
             .toStrictEqual(data.resultWithoutRemovedKeys);
     });
 
     test("petstore.json v2.0", async () => {
-        const schemaFilePath = appRoot + "/node_modules/oas-schemas/examples/v2.0/json/petstore.json";
+        const schemaFilePath = "./node_modules/oas-schemas/examples/v2.0/json/petstore.json";
         await expect(SchemExtractor.fromFile(schemaFilePath, data.keysToRemove))
             .resolves
             .toStrictEqual(data.resultWithoutRemovedKeys);
     });
 
     test("invalid keysToRemove", async () => {
-        const schemaFilePath = appRoot + "/node_modules/oas-schemas/examples/v2.0/yaml/petstore.yaml";
+        const schemaFilePath = "./node_modules/oas-schemas/examples/v2.0/yaml/petstore.yaml";
         await expect(SchemExtractor.fromFile(schemaFilePath, 123))
             .rejects
             .toStrictEqual(Error("Invalid input keysToRemove"));
@@ -68,7 +67,7 @@ describe("fromFile without some keys", () => {
 describe("fromObject", () => {
 
     test("petstore.yaml v2.0", async () => {
-        const schemaString = FilePathManager.readFilePathToString(appRoot + "/node_modules/oas-schemas/examples/v2.0/yaml/petstore.yaml");
+        const schemaString = FilePathManager.readFilePathToString("./node_modules/oas-schemas/examples/v2.0/yaml/petstore.yaml");
         const schemaObject = yaml.safeLoad(schemaString);
         await expect(SchemExtractor.fromObject(schemaObject))
             .resolves
@@ -76,7 +75,7 @@ describe("fromObject", () => {
     });
 
     test("petstore.json v2.0", async () => {
-        const schemaObject = require(appRoot + "/node_modules/oas-schemas/examples/v2.0/json/petstore.json");
+        const schemaObject = require("../node_modules/oas-schemas/examples/v2.0/json/petstore.json");
         await expect(SchemExtractor.fromObject(schemaObject))
             .resolves
             .toStrictEqual(data.result);
@@ -101,7 +100,7 @@ describe("fromObject", () => {
 describe("fromObject without some keys", () => {
 
     test("petstore.yaml v2.0", async () => {
-        const schemaString = FilePathManager.readFilePathToString(appRoot + "/node_modules/oas-schemas/examples/v2.0/yaml/petstore.yaml");
+        const schemaString = FilePathManager.readFilePathToString("./node_modules/oas-schemas/examples/v2.0/yaml/petstore.yaml");
         const schemaObject = yaml.safeLoad(schemaString);
         await expect(SchemExtractor.fromObject(schemaObject, data.keysToRemove))
             .resolves
@@ -109,7 +108,7 @@ describe("fromObject without some keys", () => {
     });
 
     test("petstore.json v2.0", async () => {
-        const schemaObject = require(appRoot + "/node_modules/oas-schemas/examples/v2.0/json/petstore.json");
+        const schemaObject = require("../node_modules/oas-schemas/examples/v2.0/json/petstore.json");
         await expect(SchemExtractor.fromObject(schemaObject, data.keysToRemove))
             .resolves
             .toStrictEqual(data.resultWithoutRemovedKeys);
@@ -120,14 +119,14 @@ describe("fromObject without some keys", () => {
 describe("fromString", () => {
 
     test("petstore.yaml v2.0", async () => {
-        const schemaString = FilePathManager.readFilePathToString(appRoot + "/node_modules/oas-schemas/examples/v2.0/yaml/petstore.yaml");
+        const schemaString = FilePathManager.readFilePathToString("./node_modules/oas-schemas/examples/v2.0/yaml/petstore.yaml");
         await expect(SchemExtractor.fromString(schemaString))
             .resolves
             .toStrictEqual(data.result);
     });
 
     test("petstore.json v2.0", async () => {
-        const schemaString = FilePathManager.readFilePathToString(appRoot + "/node_modules/oas-schemas/examples/v2.0/json/petstore.json");
+        const schemaString = FilePathManager.readFilePathToString("./node_modules/oas-schemas/examples/v2.0/json/petstore.json");
         await expect(SchemExtractor.fromString(schemaString))
             .resolves
             .toStrictEqual(data.result);
@@ -145,14 +144,14 @@ describe("fromString", () => {
 describe("fromString without some keys", () => {
 
     test("petstore.yaml v2.0", async () => {
-        const schemaString = FilePathManager.readFilePathToString(appRoot + "/node_modules/oas-schemas/examples/v2.0/yaml/petstore.yaml");
+        const schemaString = FilePathManager.readFilePathToString("./node_modules/oas-schemas/examples/v2.0/yaml/petstore.yaml");
         await expect(SchemExtractor.fromString(schemaString, data.keysToRemove))
             .resolves
             .toStrictEqual(data.resultWithoutRemovedKeys);
     });
 
     test("petstore.json v2.0", async () => {
-        const schemaString = FilePathManager.readFilePathToString(appRoot + "/node_modules/oas-schemas/examples/v2.0/json/petstore.json");
+        const schemaString = FilePathManager.readFilePathToString("./node_modules/oas-schemas/examples/v2.0/json/petstore.json");
         await expect(SchemExtractor.fromString(schemaString, data.keysToRemove))
             .resolves
             .toStrictEqual(data.resultWithoutRemovedKeys);

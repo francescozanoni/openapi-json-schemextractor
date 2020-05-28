@@ -1,7 +1,6 @@
 "use strict";
 
-const appRoot = require("app-root-path");
-const OpenAPISchemaManager = require(appRoot + "/lib/openapi-schema-manager");
+const OpenAPISchemaManager = require("../lib/openapi-schema-manager");
 
 describe("getModelSchemas", () => {
 

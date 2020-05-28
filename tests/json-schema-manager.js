@@ -1,7 +1,6 @@
 "use strict";
 
-const appRoot = require("app-root-path");
-const JSONSchemaManager = require(appRoot + "/lib/json-schema-manager");
+const JSONSchemaManager = require("../lib/json-schema-manager");
 
 describe("JSONSchemaManager.fix", () => {
 

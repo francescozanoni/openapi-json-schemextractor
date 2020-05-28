@@ -3,14 +3,13 @@
 const yaml = require('js-yaml');
 const nock = require('nock');
 
-const appRoot = require("app-root-path");
-const SchemExtractor = require(appRoot + "/lib/index-browser");
-const FilePathManager = require(appRoot + "/lib/file-path-manager");
+const SchemExtractor = require("../lib/index-browser");
+const FilePathManager = require("../lib/file-path-manager");
 
-const schemaLocalFilePath = appRoot + "/node_modules/oas-schemas/examples/v3.0/petstore.yaml";
-const schemaInexistentFilePath = appRoot + "/petstore.yaml";
+const schemaLocalFilePath = "./node_modules/oas-schemas/examples/v3.0/petstore.yaml";
+const schemaInexistentFilePath = "../petstore.yaml";
 
-const data = require(appRoot + "/tests/data");
+const data = require("./data");
 
 describe("fromFile", () => {
 

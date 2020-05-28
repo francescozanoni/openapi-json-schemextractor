@@ -1,7 +1,6 @@
 "use strict";
 
-const appRoot = require("app-root-path");
-const helpers = require(appRoot + "/lib/helpers");
+const helpers = require("../lib/helpers");
 
 describe("removeKeyFromObject", () => {
 
