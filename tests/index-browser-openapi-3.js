@@ -50,7 +50,7 @@ describe("fromFile", () => {
             .toStrictEqual(data.resultWithParameters);
     });
 
-    test("invalid URL", async () => {
+    test("inexistent URL", async () => {
 
         // Mock HTTP server
         nock("https://raw.githubusercontent.com")
@@ -64,7 +64,14 @@ describe("fromFile", () => {
         const schemaFilePath = "https://raw.githubusercontent.com/OAI/OpenAPI-Specification/master/examples/v3.0/nooooo.yaml";
         await expect(SchemExtractor.fromFile(schemaFilePath))
             .rejects
-            .toStrictEqual(Error("Schema file path not found"));
+            .toStrictEqual(Error("Schema file URL not found"));
+    });
+
+    test("invalid URL", async () => {
+        const schemaFilePath = "ftp://raw.githubusercontent.com/OAI/OpenAPI-Specification/master/examples/v3.0/openapi.yaml";
+        await expect(SchemExtractor.fromFile(schemaFilePath))
+            .rejects
+            .toStrictEqual(Error("Invalid schema file URL"));
     });
 
 });
