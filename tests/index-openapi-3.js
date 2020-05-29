@@ -64,7 +64,7 @@ describe("fromFile", () => {
         const schemaFilePath = "https://raw.githubusercontent.com/OAI/OpenAPI-Specification/master/examples/v3.0/nooooo.yaml";
         await expect(SchemExtractor.fromFile(schemaFilePath))
             .rejects
-            .toStrictEqual(Error("Schema file path not found"));
+            .toStrictEqual(Error("Schema file URL not found"));
     });
 
 });
