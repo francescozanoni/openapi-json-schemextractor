@@ -1,7 +1,6 @@
 "use strict";
 
-const appRoot = require("app-root-path");
-const SchemExtractor = require(appRoot + "/lib/index");
+const SchemExtractor = require("../lib/index");
 
 const openapiSchemaPathOrUrl = process.argv[2];
 
