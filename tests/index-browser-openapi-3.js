@@ -1,5 +1,9 @@
 "use strict";
 
+/**
+ * @jest-environment jsdom
+ */
+
 const yaml = require('js-yaml');
 const nock = require('nock');
 
