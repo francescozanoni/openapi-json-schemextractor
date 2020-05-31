@@ -5,6 +5,7 @@
  */
 
 const yaml = require('js-yaml');
+const nock = require('nock');
 
 const SchemExtractor = require("../lib/index-browser");
 const FilePathManager = require("../lib/file-path-manager");
@@ -39,6 +40,25 @@ describe("fromFile", () => {
         await expect(SchemExtractor.fromFile(schemaFilePath))
             .rejects
             .toStrictEqual(Error("Input schema file URL is not a string"));
+    });
+    
+    test("empty-openapi.json", async () => {
+
+        // Mock HTTP server
+        const schemaString = FilePathManager.readFilePathToString("./tests/empty-openapi.json");
+        nock("https://raw.githubusercontent.com")
+            .get("/empty-openapi.json")
+            .reply(200, schemaString);
+        // HEAD method must be mocked because it's used by url-exist package
+        nock("https://raw.githubusercontent.com")
+            .head("/empty-openapi.json")
+            .reply(200, "");
+
+        const schemaFilePath = "https://raw.githubusercontent.com/empty-openapi.json";
+        await expect(SchemExtractor.fromFile(schemaFilePath))
+            .rejects
+            .toStrictEqual(Error("Invalid input schema: no model schemas found"));
+            
     });
 
 });
