@@ -69,22 +69,6 @@ describe("fromFile", () => {
 
 });
 
-describe("fromFile without some keys", () => {
-
-    test("petstore.yaml v3.0", async () => {
-        await expect(SchemExtractor.fromFile(schemaLocalFilePath, data.keysToRemove))
-            .resolves
-            .toStrictEqual(data.resultWithParametersWithoutRemovedKeys);
-    });
-
-    test("invalid keysToRemove", async () => {
-        await expect(SchemExtractor.fromFile(schemaLocalFilePath, 123))
-            .rejects
-            .toStrictEqual(Error("Invalid input keysToRemove"));
-    });
-
-});
-
 describe("fromObject", () => {
 
     test("petstore.yaml v3.0", async () => {
@@ -111,18 +95,6 @@ describe("fromObject", () => {
 
 });
 
-describe("fromObject without some keys", () => {
-
-    test("petstore.yaml v3.0", async () => {
-        const schemaString = FilePathManager.readFilePathToString(schemaLocalFilePath);
-        const schemaObject = yaml.safeLoad(schemaString);
-        await expect(SchemExtractor.fromObject(schemaObject, data.keysToRemove))
-            .resolves
-            .toStrictEqual(data.resultWithParametersWithoutRemovedKeys);
-    });
-
-});
-
 describe("fromString", () => {
 
     test("petstore.yaml v3.0", async () => {
@@ -137,17 +109,6 @@ describe("fromString", () => {
         await expect(SchemExtractor.fromString(schemaString))
             .rejects
             .toStrictEqual(Error("Expected a file path, URL, or object. Got undefined"));
-    });
-
-});
-
-describe("fromString without some keys", () => {
-
-    test("petstore.yaml v3.0", async () => {
-        const schemaString = FilePathManager.readFilePathToString(schemaLocalFilePath);
-        await expect(SchemExtractor.fromString(schemaString, data.keysToRemove))
-            .resolves
-            .toStrictEqual(data.resultWithParametersWithoutRemovedKeys);
     });
 
 });
