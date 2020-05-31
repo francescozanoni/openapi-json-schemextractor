@@ -51,21 +51,11 @@ node node_modules/openapi-json-schemextractor/bin/run.js path/to/openapi.yaml
 {
   Pet: {
     type: "object",
-    required: [
-      "id",
-      "name"
-    ],
+    required: [ "id", "name" ],
     properties: {
-      id: {
-        type: "integer",
-        format: "int64"
-      },
-      name: {
-        type: "string"
-      },
-      tag: {
-        type: "string"
-      }
+      id: { type: "integer", format: "int64" },
+      name: { type: "string" },
+      tag: { type: "string" }
     },
     $schema: "http://json-schema.org/draft-04/schema#"
   },
@@ -73,39 +63,21 @@ node node_modules/openapi-json-schemextractor/bin/run.js path/to/openapi.yaml
     type: "array",
     items: {
       type: "object",
-      required: [
-        "id",
-        "name"
-      ],
+      required: [ "id", "name" ],
       properties: {
-        id: {
-          type: "integer",
-          format: "int64"
-        },
-        name: {
-          type: "string"
-        },
-        tag: {
-          type: "string"
-        }
+        id: { type: "integer", format: "int64" },
+        name: { type: "string" },
+        tag: { type: "string" }
       }
     },
     $schema: "http://json-schema.org/draft-04/schema#"
   },
   Error: {
     type: "object",
-    required: [
-      "code",
-      "message"
-    ],
+    required: [ "code", "message" ],
     properties: {
-      code: {
-        type: "integer",
-        format: "int32"
-      },
-      message: {
-        type: "string"
-      }
+      code: { type: "integer", format: "int32" },
+      message: { type: "string" }
     },
     $schema: "http://json-schema.org/draft-04/schema#"
   },
