@@ -9,9 +9,16 @@ describe("isFilePathReadable", () => {
             .toStrictEqual(true);
     });
 
-    test("no", () => {
+    test("no (does nor exist)", () => {
         expect(FilePathManager.isFilePathReadable("./a"))
             .toStrictEqual(false);
     });
+    
+    if (FilePathManager.isFilePathValid("/root") === true) {
+        test("no (really not readable)", () => {
+            expect(FilePathManager.isFilePathReadable("/root"))
+                .toStrictEqual(false);
+        });
+    }
 
 });

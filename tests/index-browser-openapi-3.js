@@ -52,6 +52,7 @@ describe("fromFile", () => {
         await expect(SchemExtractor.fromFile(schemaFilePath))
             .resolves
             .toStrictEqual(data.resultWithParameters);
+            
     });
 
     test("inexistent URL", async () => {
@@ -69,6 +70,7 @@ describe("fromFile", () => {
         await expect(SchemExtractor.fromFile(schemaFilePath))
             .rejects
             .toStrictEqual(Error("Schema file URL not found"));
+            
     });
 
     test("invalid URL", async () => {

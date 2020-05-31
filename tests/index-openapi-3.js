@@ -24,6 +24,14 @@ describe("fromFile", () => {
             .rejects
             .toStrictEqual(Error("Schema file path not found"));
     });
+    
+    if (FilePathManager.isFilePathValid("/root") === true) {
+        test("unreadable file path", async () => {
+            await expect(SchemExtractor.fromFile("/root"))
+                .rejects
+                .toStrictEqual(Error("Schema file path not readable"));
+        });
+    }
 
     test("invalid file path (number)", async () => {
         const schemaFilePath = 123;
