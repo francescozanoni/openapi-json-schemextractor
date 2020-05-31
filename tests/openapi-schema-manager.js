@@ -33,3 +33,19 @@ describe("getModelSchemas", () => {
     });
 
 });
+
+describe("fixModelSchema", () => {
+
+    test("empty object", () => {
+        expect(OpenAPISchemaManager.fixModelSchema({}))
+            .toStrictEqual({});
+    });
+    
+    test("invalid input", () => {
+        expect(() => {
+            OpenAPISchemaManager.fixModelSchema("a");
+        })
+            .toThrow(/^Input is not an object$/);
+    });
+
+});
