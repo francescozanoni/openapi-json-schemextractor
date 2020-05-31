@@ -133,3 +133,53 @@ describe("removeKeyFromObject", () => {
     });
 
 });
+
+describe("isString", () => {
+
+    const strings = [
+        "a", "", " "
+    ];
+    const notStrings = [
+        null, {}, [], 123, function(){}, Object.create({})
+    ];
+
+    for (let string of strings) {
+        test("" + JSON.stringify(string), () => {
+            expect(helpers.isString(string))
+                .toStrictEqual(true);
+        });
+    }
+
+    for (let string of notStrings) {
+        test("" + JSON.stringify(string), () => {
+            expect(helpers.isString(string))
+                .toStrictEqual(false);
+        });
+    }
+
+});
+
+describe("isEmpty", () => {
+
+    const empty = [
+        {}, [], Object.create({})
+    ];
+    const notEmpty = [
+        null, "", 0, 123, function(){}
+    ];
+
+    for (let item of empty) {
+        test("" + JSON.stringify(item), () => {
+            expect(helpers.isEmpty(item))
+                .toStrictEqual(true);
+        });
+    }
+
+    for (let item of notEmpty) {
+        test("" + JSON.stringify(item), () => {
+            expect(helpers.isEmpty(item))
+                .toStrictEqual(false);
+        });
+    }
+
+});
