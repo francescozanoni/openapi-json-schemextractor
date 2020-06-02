@@ -24,8 +24,10 @@ describe("fromFile", () => {
             .rejects
             .toStrictEqual(Error("Schema file path not found"));
     });
-    
-    if (FilePathManager.isFilePathValid("/root") === true) {
+
+    // @todo improve this logic, by adding tests on Windows and Mac OS environments
+    if (process.env.USER !== "root" &&
+        FilePathManager.isFilePathValid("/root") === true) {
         test("unreadable file path", async () => {
             await expect(SchemExtractor.fromFile("/root"))
                 .rejects
