@@ -2,6 +2,163 @@
 
 const helpers = require("../lib/helpers");
 
+describe("isObject", () => {
+
+    const trueValues = [
+        {}, {a: 1}, Object.create({})
+    ];
+
+    const falseValues = [
+        null, [], 123, function(){}, undefined
+    ];
+
+    for (let value of trueValues) {
+        test("" + JSON.stringify(value), () => {
+            expect(helpers.isObject(value))
+                .toStrictEqual(true);
+        });
+    }
+
+    for (let value of falseValues) {
+        test("" + JSON.stringify(value), () => {
+            expect(helpers.isObject(value))
+                .toStrictEqual(false);
+        });
+    }
+
+});
+
+describe("isArray", () => {
+
+    const trueValues = [
+        [], [1, 2, 3]
+    ];
+
+    const falseValues = [
+        null, {}, 123, function(){}, undefined, Object.create({})
+    ];
+
+    for (let value of trueValues) {
+        test("" + JSON.stringify(value), () => {
+            expect(helpers.isArray(value))
+                .toStrictEqual(true);
+        });
+    }
+
+    for (let value of falseValues) {
+        test("" + JSON.stringify(value), () => {
+            expect(helpers.isArray(value))
+                .toStrictEqual(false);
+        });
+    }
+
+});
+
+describe("isString", () => {
+
+    const trueValues = [
+        "a", "", " "
+    ];
+
+    const falseValues = [
+        null, {}, [], 123, function(){}, Object.create({}), undefined
+    ];
+
+    for (let value of trueValues) {
+        test("" + JSON.stringify(value), () => {
+            expect(helpers.isString(value))
+                .toStrictEqual(true);
+        });
+    }
+
+    for (let value of falseValues) {
+        test("" + JSON.stringify(value), () => {
+            expect(helpers.isString(value))
+                .toStrictEqual(false);
+        });
+    }
+
+});
+
+describe("isUndefined", () => {
+
+    const trueValues = [
+        undefined
+    ];
+
+    const falseValues = [
+        null, "", 0, 123, function(){}, {}, [], Object.create({})
+    ];
+
+    for (let value of trueValues) {
+        test("" + JSON.stringify(value), () => {
+            expect(helpers.isUndefined(value))
+                .toStrictEqual(true);
+        });
+    }
+
+    for (let value of falseValues) {
+        test("" + JSON.stringify(value), () => {
+            expect(helpers.isUndefined(value))
+                .toStrictEqual(false);
+        });
+    }
+
+});
+
+describe("isEmpty", () => {
+
+    const trueValues = [
+        {}, [], Object.create({})
+    ];
+
+    const falseValues = [
+        null, "", 0, 123, function(){}, undefined
+    ];
+
+    for (let value of trueValues) {
+        test("" + JSON.stringify(value), () => {
+            expect(helpers.isEmpty(value))
+                .toStrictEqual(true);
+        });
+    }
+
+    for (let value of falseValues) {
+        test("" + JSON.stringify(value), () => {
+            expect(helpers.isEmpty(value))
+                .toStrictEqual(false);
+        });
+    }
+
+});
+
+describe("isWebUrl", () => {
+
+    const trueValues = [
+        "http://example.com", "https://example.com",
+    ];
+
+    const falseValues = [
+        null, "", 0, 123, function(){}, undefined, {}, [], Object.create({}),
+        "ftp://example.com", "http://", "https://"
+    ];
+
+    for (let value of trueValues) {
+        test("" + JSON.stringify(value), () => {
+            expect(helpers.isWebUrl(value))
+                .toStrictEqual(true);
+        });
+    }
+
+    for (let value of falseValues) {
+        test("" + JSON.stringify(value), () => {
+            expect(helpers.isWebUrl(value))
+                .toStrictEqual(false);
+        });
+    }
+
+});
+
 describe("removeKeyFromObject", () => {
 
     const before = {
@@ -91,7 +248,7 @@ describe("removeKeyFromObject", () => {
         expect(() => {
             helpers.removeKeyFromObject(before, "b");
         })
-            .toThrow(/^Invalid input object: "a"$/);
+            .toThrow(Error("Invalid input object: \"a\""));
     });
 
     test("invalid object (null)", () => {
@@ -99,7 +256,7 @@ describe("removeKeyFromObject", () => {
         expect(() => {
             helpers.removeKeyFromObject(before, "b");
         })
-            .toThrow(/^Invalid input object: null$/);
+            .toThrow(Error("Invalid input object: null"));
     });
 
     test("invalid object (array)", () => {
@@ -107,14 +264,14 @@ describe("removeKeyFromObject", () => {
         expect(() => {
             helpers.removeKeyFromObject(before, "b");
         })
-            .toThrow(/^Invalid input object: \["a","b","c"\]$/);
+            .toThrow(Error("Invalid input object: [\"a\",\"b\",\"c\"]"));
     });
 
     test("invalid keyToRemove (numeric)", () => {
         expect(() => {
             helpers.removeKeyFromObject(before, 1);
         })
-            .toThrow(/^Invalid input keyToRemove: 1$/);
+            .toThrow(Error("Invalid input keyToRemove: 1"));
     });
 
     test("invalid keyToRemove (null)", () => {
@@ -122,64 +279,14 @@ describe("removeKeyFromObject", () => {
         expect(() => {
             helpers.removeKeyFromObject(before, null);
         })
-            .toThrow(/^Invalid input keyToRemove: null$/);
+            .toThrow(Error("Invalid input keyToRemove: null"));
     });
 
     test("invalid valuesToCheck (null)", () => {
         expect(() => {
             helpers.removeKeyFromObject(before, "b", null);
         })
-            .toThrow(/^Invalid input valuesToCheck: null$/);
+            .toThrow(Error("Invalid input valuesToCheck: null"));
     });
-
-});
-
-describe("isString", () => {
-
-    const strings = [
-        "a", "", " "
-    ];
-    const notStrings = [
-        null, {}, [], 123, function(){}, Object.create({})
-    ];
-
-    for (let string of strings) {
-        test("" + JSON.stringify(string), () => {
-            expect(helpers.isString(string))
-                .toStrictEqual(true);
-        });
-    }
-
-    for (let string of notStrings) {
-        test("" + JSON.stringify(string), () => {
-            expect(helpers.isString(string))
-                .toStrictEqual(false);
-        });
-    }
-
-});
-
-describe("isEmpty", () => {
-
-    const empty = [
-        {}, [], Object.create({})
-    ];
-    const notEmpty = [
-        null, "", 0, 123, function(){}
-    ];
-
-    for (let item of empty) {
-        test("" + JSON.stringify(item), () => {
-            expect(helpers.isEmpty(item))
-                .toStrictEqual(true);
-        });
-    }
-
-    for (let item of notEmpty) {
-        test("" + JSON.stringify(item), () => {
-            expect(helpers.isEmpty(item))
-                .toStrictEqual(false);
-        });
-    }
 
 });
