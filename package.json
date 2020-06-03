@@ -17,6 +17,10 @@
   ],
   "author": "Francesco Zanoni <francescozanoni81@gmail.com>",
   "license": "MIT",
+  "files": [
+    "/lib",
+    "/bin"
+  ],
   "scripts": {
     "test": "jest"
   },
