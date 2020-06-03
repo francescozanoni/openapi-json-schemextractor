@@ -10,27 +10,26 @@ const nock = require('nock');
 const SchemExtractor = require("../lib/index-browser");
 const FilePathManager = require("../lib/file-path-manager");
 
-const schemaLocalFilePath = "./node_modules/oas-schemas/examples/v3.0/petstore.yaml";
-const schemaInexistentFilePath = "../petstore.yaml";
-
 const data = require("./data");
 
 describe("fromFile", () => {
 
     test("invalid URL: local petstore.yaml v3.0", async () => {
-        await expect(SchemExtractor.fromFile(schemaLocalFilePath))
+        const schemaFilePath = data.openapiSchemas["local-yaml-v3.0"];
+        await expect(SchemExtractor.fromFile(schemaFilePath))
             .rejects
             .toStrictEqual(Error("Invalid schema file URL"));
     });
 
     test("invalid URL: inexistent file path", async () => {
-        await expect(SchemExtractor.fromFile(schemaInexistentFilePath))
+        const schemaFilePath = data.openapiSchemas["local-inexistent"];
+        await expect(SchemExtractor.fromFile(schemaFilePath))
             .rejects
             .toStrictEqual(Error("Invalid schema file URL"));
     });
 
     test("invalid URL: invalid file path (number)", async () => {
-        const schemaFilePath = 123;
+        const schemaFilePath = data.openapiSchemas["local-invalid-path"];
         await expect(SchemExtractor.fromFile(schemaFilePath))
             .rejects
             .toStrictEqual(Error("Input schema file URL is not a string"));
@@ -39,17 +38,18 @@ describe("fromFile", () => {
     test("remote petstore.yaml v3.0", async () => {
 
         // Mock HTTP server
-        const schemaString = FilePathManager.readFilePathToString(schemaLocalFilePath);
-        nock("https://raw.githubusercontent.com")
-            .get("/OAI/OpenAPI-Specification/master/examples/v3.0/petstore.yaml")
+        const schemaString = FilePathManager.readFilePathToString(data.openapiSchemas["local-yaml-v3.0"]);
+        const schemaHost = data.openapiSchemas["remote-yaml-v3.0"].substr(0, 33);
+        const schemaPath = data.openapiSchemas["remote-yaml-v3.0"].substr(33);
+        nock(schemaHost)
+            .get(schemaPath)
             .reply(200, schemaString);
         // HEAD method must be mocked because it's used by url-exist package
-        nock("https://raw.githubusercontent.com")
-            .head("/OAI/OpenAPI-Specification/master/examples/v3.0/petstore.yaml")
+        nock(schemaHost)
+            .head(schemaPath)
             .reply(200, "");
 
-        const schemaFilePath = "https://raw.githubusercontent.com/OAI/OpenAPI-Specification/master/examples/v3.0/petstore.yaml";
-        await expect(SchemExtractor.fromFile(schemaFilePath))
+        await expect(SchemExtractor.fromFile(data.openapiSchemas["remote-yaml-v3.0"]))
             .resolves
             .toStrictEqual(data.resultWithParameters);
             
@@ -58,23 +58,24 @@ describe("fromFile", () => {
     test("inexistent URL", async () => {
 
         // Mock HTTP server
-        nock("https://raw.githubusercontent.com")
-            .get("/OAI/OpenAPI-Specification/master/examples/v3.0/nooooo.yaml")
+        const schemaHost = data.openapiSchemas["remote-inexistent"].substr(0, 33);
+        const schemaPath = data.openapiSchemas["remote-inexistent"].substr(33);
+        nock(schemaHost)
+            .get(schemaPath)
             .reply(404, "");
         // HEAD method must be mocked because it's used by url-exist package
-        nock("https://raw.githubusercontent.com")
-            .head("/OAI/OpenAPI-Specification/master/examples/v3.0/nooooo.yaml")
+        nock(schemaHost)
+            .head(schemaPath)
             .reply(404, "");
 
-        const schemaFilePath = "https://raw.githubusercontent.com/OAI/OpenAPI-Specification/master/examples/v3.0/nooooo.yaml";
-        await expect(SchemExtractor.fromFile(schemaFilePath))
+        await expect(SchemExtractor.fromFile(data.openapiSchemas["remote-inexistent"]))
             .rejects
             .toStrictEqual(Error("Schema file URL not found"));
             
     });
 
     test("invalid URL", async () => {
-        const schemaFilePath = "ftp://raw.githubusercontent.com/OAI/OpenAPI-Specification/master/examples/v3.0/openapi.yaml";
+        const schemaFilePath = data.openapiSchemas["remote-invalid-url"];
         await expect(SchemExtractor.fromFile(schemaFilePath))
             .rejects
             .toStrictEqual(Error("Invalid schema file URL"));
@@ -85,7 +86,7 @@ describe("fromFile", () => {
 describe("fromObject", () => {
 
     test("petstore.yaml v3.0", async () => {
-        const schemaString = FilePathManager.readFilePathToString(schemaLocalFilePath);
+        const schemaString = FilePathManager.readFilePathToString(data.openapiSchemas["local-yaml-v3.0"]);
         const schemaObject = yaml.safeLoad(schemaString);
         await expect(SchemExtractor.fromObject(schemaObject))
             .resolves
@@ -111,7 +112,7 @@ describe("fromObject", () => {
 describe("fromString", () => {
 
     test("petstore.yaml v3.0", async () => {
-        const schemaString = FilePathManager.readFilePathToString(schemaLocalFilePath);
+        const schemaString = FilePathManager.readFilePathToString(data.openapiSchemas["local-yaml-v3.0"]);
         await expect(SchemExtractor.fromString(schemaString))
             .resolves
             .toStrictEqual(data.resultWithParameters);

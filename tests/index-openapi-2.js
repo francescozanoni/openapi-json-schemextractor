@@ -10,28 +10,28 @@ const data = require("./data");
 describe("fromFile", () => {
 
     test("petstore.yaml v2.0", async () => {
-        const schemaFilePath = "./node_modules/oas-schemas/examples/v2.0/yaml/petstore.yaml";
+        const schemaFilePath = data.openapiSchemas["local-yaml-v2.0"];
         await expect(SchemExtractor.fromFile(schemaFilePath))
             .resolves
             .toStrictEqual(data.result);
     });
 
     test("petstore.json v2.0", async () => {
-        const schemaFilePath = "./node_modules/oas-schemas/examples/v2.0/json/petstore.json";
+        const schemaFilePath = data.openapiSchemas["local-json-v2.0"];
         await expect(SchemExtractor.fromFile(schemaFilePath))
             .resolves
             .toStrictEqual(data.result);
     });
 
     test("inexistent file path", async () => {
-        const schemaFilePath = "./petstore.yaml";
+        const schemaFilePath = data.openapiSchemas["local-inexistent"];
         await expect(SchemExtractor.fromFile(schemaFilePath))
             .rejects
             .toStrictEqual(Error("Schema file path not found"));
     });
 
     test("invalid file path (number)", async () => {
-        const schemaFilePath = 123;
+        const schemaFilePath = data.openapiSchemas["local-invalid-path"];
         await expect(SchemExtractor.fromFile(schemaFilePath))
             .rejects
             .toStrictEqual(Error("Input schema file path is not a string"));
@@ -42,7 +42,7 @@ describe("fromFile", () => {
 describe("fromObject", () => {
 
     test("petstore.yaml v2.0", async () => {
-        const schemaString = FilePathManager.readFilePathToString("./node_modules/oas-schemas/examples/v2.0/yaml/petstore.yaml");
+        const schemaString = FilePathManager.readFilePathToString(data.openapiSchemas["local-yaml-v2.0"]);
         const schemaObject = yaml.safeLoad(schemaString);
         await expect(SchemExtractor.fromObject(schemaObject))
             .resolves
@@ -50,7 +50,7 @@ describe("fromObject", () => {
     });
 
     test("petstore.json v2.0", async () => {
-        const schemaObject = require("../node_modules/oas-schemas/examples/v2.0/json/petstore.json");
+        const schemaObject = require("." + data.openapiSchemas["local-json-v2.0"]);
         await expect(SchemExtractor.fromObject(schemaObject))
             .resolves
             .toStrictEqual(data.result);
@@ -75,14 +75,14 @@ describe("fromObject", () => {
 describe("fromString", () => {
 
     test("petstore.yaml v2.0", async () => {
-        const schemaString = FilePathManager.readFilePathToString("./node_modules/oas-schemas/examples/v2.0/yaml/petstore.yaml");
+        const schemaString = FilePathManager.readFilePathToString(data.openapiSchemas["local-yaml-v2.0"]);
         await expect(SchemExtractor.fromString(schemaString))
             .resolves
             .toStrictEqual(data.result);
     });
 
     test("petstore.json v2.0", async () => {
-        const schemaString = FilePathManager.readFilePathToString("./node_modules/oas-schemas/examples/v2.0/json/petstore.json");
+        const schemaString = FilePathManager.readFilePathToString(data.openapiSchemas["local-json-v2.0"]);
         await expect(SchemExtractor.fromString(schemaString))
             .resolves
             .toStrictEqual(data.result);

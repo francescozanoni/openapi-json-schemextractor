@@ -131,5 +131,17 @@
       "format": "int32",
       "type": "integer"
     }
+  },
+  "openapiSchemas": {
+    "local-yaml-v3.0": "./node_modules/oas-schemas/examples/v3.0/petstore.yaml",
+    "local-yaml-v2.0": "./node_modules/oas-schemas/examples/v2.0/yaml/petstore.yaml",
+    "local-json-v2.0": "./node_modules/oas-schemas/examples/v2.0/json/petstore.json",
+    "local-json-empty": "./tests/empty-openapi.json",
+    "local-inexistent": "../petstore.yaml",
+    "local-invalid-path": 123,
+    "remote-yaml-v3.0": "https://raw.githubusercontent.com/OAI/OpenAPI-Specification/master/examples/v3.0/petstore.yaml",
+    "remote-inexistent": "https://raw.githubusercontent.com/OAI/OpenAPI-Specification/master/examples/v3.0/noooooo.yaml",
+    "remote-invalid-url": "ftp://raw.githubusercontent.com/OAI/OpenAPI-Specification/master/examples/v3.0/petstore.yaml",
+    "remote-json-empty": "https://raw.githubusercontent.com/empty-openapi.json"
   }
 }
