@@ -1,4 +1,4 @@
-# openapi-json-schemextractor [![Build Status](https://travis-ci.org/francescozanoni/openapi-json-schemextractor.svg?branch=master)](https://travis-ci.org/francescozanoni/openapi-json-schemextractor) [![Coverage Status](https://coveralls.io/repos/github/francescozanoni/openapi-json-schemextractor/badge.svg?branch=master&service=github)](https://coveralls.io/github/francescozanoni/openapi-json-schemextractor?branch=master&service=github)
+# openapi-json-schemextractor [![Build Status](https://travis-ci.org/francescozanoni/openapi-json-schemextractor.svg?branch=master)](https://travis-ci.org/francescozanoni/openapi-json-schemextractor) [![Coverage Status](https://coveralls.io/repos/github/francescozanoni/openapi-json-schemextractor/badge.svg?branch=master&service=github)](https://coveralls.io/github/francescozanoni/openapi-json-schemextractor?branch=master&service=github) [![npm version](https://badge.fury.io/js/openapi-json-schemextractor.svg)](https://badge.fury.io/js/openapi-json-schemextractor)
 
 Extract any entity defined via a schema within [OpenAPI](https://swagger.io/docs/specification/about) schemas as standard [JSON schema](https://json-schema.org)s:
 
