@@ -3,6 +3,7 @@
   "description": "Extract standard JSON schemas from OpenAPI definitions",
   "version": "1.1.5",
   "main": "lib/index.js",
+  "module": "lib/index.js",
   "browser": "lib/index-browser.js",
   "repository": {
     "type": "git",
@@ -37,6 +38,7 @@
     "coveralls": "^3.1.0",
     "jest": "^26.0.1",
     "nock": "^12.0.3",
-    "oas-schemas": "https://github.com/OAI/OpenAPI-Specification"
+    "oas-schemas": "https://github.com/OAI/OpenAPI-Specification",
+    "standard": "^14.3.4"
   }
 }

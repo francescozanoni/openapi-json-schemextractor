@@ -1,25 +1,34 @@
 # openapi-json-schemextractor [![Build Status](https://travis-ci.org/francescozanoni/openapi-json-schemextractor.svg?branch=master)](https://travis-ci.org/francescozanoni/openapi-json-schemextractor) [![Coverage Status](https://coveralls.io/repos/github/francescozanoni/openapi-json-schemextractor/badge.svg?branch=master&service=github)](https://coveralls.io/github/francescozanoni/openapi-json-schemextractor?branch=master&service=github) [![npm version](https://badge.fury.io/js/openapi-json-schemextractor.svg)](https://badge.fury.io/js/openapi-json-schemextractor)
 
-Extract any entity defined via a schema within [OpenAPI](https://swagger.io/docs/specification/about) (a.k.a. Swagger) schemas as standard [JSON schema](https://json-schema.org)s:
+Extract any entities defined via a schema within [OpenAPI](https://swagger.io/docs/specification/about) (a.k.a. Swagger) schemas as standard [JSON schema](https://json-schema.org)s:
 
-- both [OpenAPI 2](https://swagger.io/docs/specification/2-0) and [OpenAPI 3](https://swagger.io/docs/specification) specifications are supported;
-- both [JSON](https://www.json.org) and [YAML](https://yaml.org) formats are supported;
-- schemas are extracted from:
+Entity schemas are extracted from:
   - `definitions` section ([OpenAPI 2](https://swagger.io/docs/specification/2-0)),
-  - both `parameters` and `components.schemas` sections ([OpenAPI 3](https://swagger.io/docs/specification));
-- extracted [JSON schema](https://json-schema.org)s are:
-  - plain schemas, i.e. no `$ref` or `allOf` elements,
-  - returned as native JavaScript objects,
-  - compliant with [JSON schema Draft 04](https://json-schema.org/specification-links.html#draft-4).
+  - both `parameters` and `components.schemas` sections ([OpenAPI 3](https://swagger.io/docs/specification)).
 
-Input [OpenAPI](https://swagger.io/docs/specification/about) schema can be supplied as:
+# Input
 
-- file path
-- URL (**http** or **https**)
-- string
-- native JavaScript object
+Input [OpenAPI](https://swagger.io/docs/specification/about) schemas can be supplied as:
 
-Known limitations:
+- file paths,
+- URLs (**http** or **https**),
+- strings,
+- native JavaScript objects.
+
+Furthermore:
+
+- both [OpenAPI 2](https://swagger.io/docs/specification/2-0) and [OpenAPI 3](https://swagger.io/docs/specification) specifications are supported,
+- both [JSON](https://www.json.org) and [YAML](https://yaml.org) formats are supported.
+
+# Output
+
+Extracted [JSON schema](https://json-schema.org)s are:
+
+- plain schemas, i.e. no `$ref` or `allOf` elements,
+- returned as native JavaScript objects,
+- compliant with [JSON schema Draft 04](https://json-schema.org/specification-links.html#draft-4).
+
+# Known limitations
 
 - currently schemas split over several files are not supported
 
@@ -105,8 +114,19 @@ node node_modules/openapi-json-schemextractor/bin/run.js path/to/openapi.yaml
 ## Test
 ```bash
 yarn test
-# or
-docker run --rm -v $(pwd):/usr/src/app -w /usr/src/app node:10 yarn test
-docker run --rm -v $(pwd):/usr/src/app -w /usr/src/app node:12 yarn test
-docker run --rm -v $(pwd):/usr/src/app -w /usr/src/app node:14 yarn test
+
+# or (Linux/Mac)
+docker run --rm -v $(pwd):/app -w /app node:10 yarn test
+docker run --rm -v $(pwd):/app -w /app node:12 yarn test
+docker run --rm -v $(pwd):/app -w /app node:14 yarn test
+
+# or (Windows)
+docker run --rm -v %cd%:/app -w /app node:10 yarn test
+docker run --rm -v %cd%:/app -w /app node:12 yarn test
+docker run --rm -v %cd%:/app -w /app node:14 yarn test
+```
+
+## Check code style
+```bash
+npx standard --env jest "tests/*.js" "lib/*.js" "bin/*.js"
 ```
