@@ -7,7 +7,7 @@
 const yaml = require('js-yaml')
 const nock = require('nock')
 
-const SchemExtractor = require('../lib/index-browser')
+const SchemExtractor = require('../lib/browser-handler')
 const FilePathManager = require('../lib/file-path-manager')
 
 const data = require('./data')

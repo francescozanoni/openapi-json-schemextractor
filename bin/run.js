@@ -1,6 +1,6 @@
 'use strict'
 
-const SchemExtractor = require('../lib/index')
+const SchemExtractor = require('../lib/node-handler')
 
 const openapiSchemaPathOrUrl = process.argv[2]
 

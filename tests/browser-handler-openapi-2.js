@@ -1,39 +1,63 @@
 'use strict'
 
-const yaml = require('js-yaml')
+/**
+ * @jest-environment jsdom
+ */
 
-const SchemExtractor = require('../lib/index')
+const yaml = require('js-yaml')
+const nock = require('nock')
+
+const SchemExtractor = require('../lib/browser-handler')
 const FilePathManager = require('../lib/file-path-manager')
 
 const data = require('./data')
 
 describe('fromFile', () => {
-  test('petstore.yaml v2.0', async () => {
+  test('invalid URL: petstore.yaml v2.0', async () => {
     const schemaFilePath = data.openapiSchemas['local-yaml-v2.0']
     await expect(SchemExtractor.fromFile(schemaFilePath))
-      .resolves
-      .toStrictEqual(data.result)
+      .rejects
+      .toStrictEqual(Error('Invalid schema file URL'))
   })
 
-  test('petstore.json v2.0', async () => {
+  test('invalid URL: petstore.json v2.0', async () => {
     const schemaFilePath = data.openapiSchemas['local-json-v2.0']
     await expect(SchemExtractor.fromFile(schemaFilePath))
-      .resolves
-      .toStrictEqual(data.result)
+      .rejects
+      .toStrictEqual(Error('Invalid schema file URL'))
   })
 
-  test('inexistent file path', async () => {
+  test('invalid URL: inexistent file path', async () => {
     const schemaFilePath = data.openapiSchemas['local-inexistent']
     await expect(SchemExtractor.fromFile(schemaFilePath))
       .rejects
-      .toStrictEqual(Error('Schema file path not found'))
+      .toStrictEqual(Error('Invalid schema file URL'))
   })
 
   test('invalid file path (number)', async () => {
     const schemaFilePath = data.openapiSchemas['local-invalid-path']
     await expect(SchemExtractor.fromFile(schemaFilePath))
       .rejects
-      .toStrictEqual(Error('Input schema file path is not a string'))
+      .toStrictEqual(Error('Input schema file URL is not a string'))
+  })
+
+  test('empty-openapi.json', async () => {
+    // Mock HTTP server
+    const schemaString = FilePathManager.readFilePathToString(data.openapiSchemas['local-json-empty'])
+    const schemaHost = data.openapiSchemas['remote-json-empty'].substr(0, 33)
+    const schemaPath = data.openapiSchemas['remote-json-empty'].substr(33)
+    nock(schemaHost)
+      .get(schemaPath)
+      .reply(200, schemaString)
+    // HEAD method must be mocked because it's used by url-exist package
+    nock(schemaHost)
+      .head(schemaPath)
+      .reply(200, '')
+
+    const schemaFilePath = data.openapiSchemas['remote-json-empty']
+    await expect(SchemExtractor.fromFile(schemaFilePath))
+      .rejects
+      .toStrictEqual(Error('Invalid input schema: no model schemas found'))
   })
 })
 

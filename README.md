@@ -128,5 +128,5 @@ docker run --rm -v %cd%:/app -w /app node:14 yarn test
 
 ## Check code style
 ```bash
-npx standard --env jest "tests/*.js" "lib/*.js" "bin/*.js"
+npx standard --env jest "tests/*.js" "lib/*-handler.js" "lib/*-manager.js" "lib/helpers.js" "bin/*.js"
 ```
