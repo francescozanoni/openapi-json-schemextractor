@@ -6,7 +6,7 @@ Entity schemas are extracted from:
   - `definitions` section ([OpenAPI 2](https://swagger.io/docs/specification/2-0)),
   - both `parameters` and `components.schemas` sections ([OpenAPI 3](https://swagger.io/docs/specification)).
 
-# Input
+### Input
 
 Input [OpenAPI](https://swagger.io/docs/specification/about) schemas can be supplied as:
 
@@ -20,7 +20,7 @@ Furthermore:
 - both [OpenAPI 2](https://swagger.io/docs/specification/2-0) and [OpenAPI 3](https://swagger.io/docs/specification) specifications are supported,
 - both [JSON](https://www.json.org) and [YAML](https://yaml.org) formats are supported.
 
-# Output
+### Output
 
 Extracted [JSON schema](https://json-schema.org)s are:
 
@@ -28,7 +28,7 @@ Extracted [JSON schema](https://json-schema.org)s are:
 - returned as native JavaScript objects,
 - compliant with [JSON schema Draft 04](https://json-schema.org/specification-links.html#draft-4).
 
-# Known limitations
+### Known limitations
 
 - currently schemas split over several files are not supported
 
