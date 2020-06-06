@@ -35,7 +35,7 @@ describe('readFilePathToString', () => {
                 "  - '14'\n" +
                 'install:\n' +
                 '  - yarn\n' +
-                'script: npx standard --env jest "tests/*.js" "lib/*-handler.js" "lib/*-manager.js" "lib/helpers.js" "bin/*.js" && yarn test\n' +
+                'script: yarn check && yarn test\n' +
                 'after_success:\n' +
                 '- travis_retry yarn test --coverage && node_modules/.bin/coveralls < coverage/lcov.info')
   })

@@ -22,7 +22,9 @@
     "/bin"
   ],
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "check": "standard --env jest \"*.js\" \"tests/*.js\" \"lib/*-handler.js\" \"lib/*-manager.js\" \"lib/helpers.js\" \"bin/*.js\"",
+    "standardize": "npm run check -- --fix"
   },
   "engines": {
     "node": ">=10"

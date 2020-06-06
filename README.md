@@ -39,16 +39,16 @@ yarn add openapi-json-schemextractor
 
 ## Code example
 ```javascript
-const SchemExtractor = require("openapi-json-schemextractor");
+const SchemExtractor = require("openapi-json-schemextractor")
 
 (async function () {
 
-  let schFromFile = await SchemExtractor.fromFile("path/to/openapi.yaml");
-  let schFromUrl = await SchemExtractor.fromFile("http://example.com/openapi.yaml");
-  let schFromString = await SchemExtractor.fromString("...");
-  let schFromObject = await SchemExtractor.fromObject({/* ... */});
+  let schFromFile = await SchemExtractor.fromFile("path/to/openapi.yaml")
+  let schFromUrl = await SchemExtractor.fromFile("http://example.com/openapi.yaml")
+  let schFromString = await SchemExtractor.fromString("...")
+  let schFromObject = await SchemExtractor.fromObject({/* ... */})
 
-})();
+})()
 ```
 
 ## CLI example
@@ -128,5 +128,5 @@ docker run --rm -v %cd%:/app -w /app node:14 yarn test
 
 ## Check code style
 ```bash
-npx standard --env jest "tests/*.js" "lib/*-handler.js" "lib/*-manager.js" "lib/helpers.js" "bin/*.js"
+yarn check
 ```

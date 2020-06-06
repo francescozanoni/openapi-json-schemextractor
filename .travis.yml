@@ -5,6 +5,6 @@ node_js:
   - '14'
 install:
   - yarn
-script: npx standard --env jest "tests/*.js" "lib/*-handler.js" "lib/*-manager.js" "lib/helpers.js" "bin/*.js" && yarn test
+script: yarn check && yarn test
 after_success:
 - travis_retry yarn test --coverage && node_modules/.bin/coveralls < coverage/lcov.info
