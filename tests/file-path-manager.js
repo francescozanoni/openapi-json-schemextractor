@@ -35,9 +35,9 @@ describe('readFilePathToString', () => {
                 "  - '14'\n" +
                 'install:\n' +
                 '  - yarn\n' +
-                'script: yarn check && yarn test\n' +
+                'script: yarn run check && yarn test\n' +
                 'after_success:\n' +
-                '- travis_retry yarn test --coverage && node_modules/.bin/coveralls < coverage/lcov.info')
+                '- travis_retry yarn test --coverage && node_modules/.bin/coveralls < coverage/lcov.info\n')
   })
 
   test('to existing directory', () => {
