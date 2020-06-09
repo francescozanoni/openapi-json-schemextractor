@@ -128,5 +128,5 @@ docker run --rm -v %cd%:/app -w /app node:14 yarn test
 
 ## Check code style
 ```bash
-yarn run check
+yarn run style:check
 ```
