@@ -1,5 +1,12 @@
 const path = require('path')
 
+const externals = {
+  '@apidevtools/json-schema-ref-parser': '$RefParser',
+  '@openapi-contrib/openapi-schema-to-json-schema': 'toJsonSchema',
+  'js-yaml': 'yaml',
+  'json-schema-merge-allof': 'mergeAllOf'
+}
+
 module.exports = {
   mode: 'production',
   entry: './lib/browser-handler.js',
@@ -10,30 +17,22 @@ module.exports = {
     globalObject: 'this',
     library: 'SchemExtractor'
   },
-  externals: {
-    '@apidevtools/json-schema-ref-parser': {
-      commonjs: '@apidevtools/json-schema-ref-parser',
-      commonjs2: '@apidevtools/json-schema-ref-parser',
-      amd: '@apidevtools/json-schema-ref-parser',
-      root: '$RefParser'
-    },
-    '@openapi-contrib/openapi-schema-to-json-schema': {
-      commonjs: '@openapi-contrib/openapi-schema-to-json-schema',
-      commonjs2: '@openapi-contrib/openapi-schema-to-json-schema',
-      amd: '@openapi-contrib/openapi-schema-to-json-schema',
-      root: 'toJsonSchema'
-    },
-    'js-yaml': {
-      commonjs: 'js-yaml',
-      commonjs2: 'js-yaml',
-      amd: 'js-yaml',
-      root: 'yaml'
-    },
-    'json-schema-merge-allof': {
-      commonjs: 'json-schema-merge-allof',
-      commonjs2: 'json-schema-merge-allof',
-      amd: 'json-schema-merge-allof',
-      root: 'mergeAllOf'
-    }
-  }
+  externals: function () {
+    const transformedExternals = {}
+    Object.entries(externals)
+      .forEach(entry => Object.defineProperty(
+        transformedExternals,
+        entry[0],
+        {
+          value: {
+            commonjs: entry[0],
+            commonjs2: entry[0],
+            amd: entry[0],
+            root: entry[1]
+          }
+        }
+        )
+      )
+    return transformedExternals
+  }(externals)
 }
