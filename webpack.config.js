@@ -17,7 +17,7 @@ module.exports = {
     globalObject: 'this',
     library: 'SchemExtractor'
   },
-  externals: function () {
+  externals: (function () {
     const transformedExternals = {}
     Object.entries(externals)
       .forEach(entry => Object.defineProperty(
@@ -31,8 +31,8 @@ module.exports = {
             root: entry[1]
           }
         }
-        )
+      )
       )
     return transformedExternals
-  }(externals)
+  }(externals))
 }
