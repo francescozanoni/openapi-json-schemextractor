@@ -42,7 +42,7 @@ const SchemExtractor = require("openapi-json-schemextractor")
 
 (async function () {
 
-  let schFromUrl = await SchemExtractor.fromFile("http://example.com/openapi.yaml")
+  let schFromUrl = await SchemExtractor.fromUrl("http://example.com/openapi.yaml")
   let schFromString = await SchemExtractor.fromString("...")
   let schFromObject = await SchemExtractor.fromObject({/* ... */})
 
