@@ -1,6 +1,8 @@
 'use strict'
 
-const helpers = require('../lib/helpers')
+const appRoot = require('app-root-path')
+
+const helpers = require(appRoot.resolve('/lib/helpers'))
 
 describe('isObject', () => {
   const trueValues = [

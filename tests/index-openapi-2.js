@@ -6,56 +6,57 @@
 
 const yaml = require('js-yaml')
 const nock = require('nock')
+const fs = require('fs')
+const appRoot = require('app-root-path')
 
-const SchemExtractor = require('../lib/browser-handler')
-const FilePathManager = require('../lib/file-path-manager')
+const SchemExtractor = require(appRoot.resolve('/lib/index'))
 
-const data = require('./data')
+const data = require(appRoot.resolve('/tests/data'))
 
-describe('fromFile', () => {
+describe('fromUrl', () => {
   test('invalid URL: petstore.yaml v2.0', async () => {
-    const schemaFilePath = data.openapiSchemas['local-yaml-v2.0']
-    await expect(SchemExtractor.fromFile(schemaFilePath))
+    const schemaFilePath = appRoot.resolve(data.openapiSchemas['local-yaml-v2.0'])
+    await expect(SchemExtractor.fromUrl(schemaFilePath))
       .rejects
       .toStrictEqual(Error('Invalid schema file URL'))
   })
 
   test('invalid URL: petstore.json v2.0', async () => {
-    const schemaFilePath = data.openapiSchemas['local-json-v2.0']
-    await expect(SchemExtractor.fromFile(schemaFilePath))
+    const schemaFilePath = appRoot.resolve(data.openapiSchemas['local-json-v2.0'])
+    await expect(SchemExtractor.fromUrl(schemaFilePath))
       .rejects
       .toStrictEqual(Error('Invalid schema file URL'))
   })
 
   test('invalid URL: inexistent file path', async () => {
-    const schemaFilePath = data.openapiSchemas['local-inexistent']
-    await expect(SchemExtractor.fromFile(schemaFilePath))
+    const schemaFilePath = appRoot.resolve(data.openapiSchemas['local-inexistent'])
+    await expect(SchemExtractor.fromUrl(schemaFilePath))
       .rejects
       .toStrictEqual(Error('Invalid schema file URL'))
   })
 
   test('invalid file path (number)', async () => {
     const schemaFilePath = data.openapiSchemas['local-invalid-path']
-    await expect(SchemExtractor.fromFile(schemaFilePath))
+    await expect(SchemExtractor.fromUrl(schemaFilePath))
       .rejects
       .toStrictEqual(Error('Input schema file URL is not a string'))
   })
 
   test('empty-openapi.json', async () => {
     // Mock HTTP server
-    const schemaString = FilePathManager.readFilePathToString(data.openapiSchemas['local-json-empty'])
+    const schemaBuffer = fs.readFileSync(appRoot.resolve(data.openapiSchemas['local-json-empty']))
     const schemaHost = data.openapiSchemas['remote-json-empty'].substr(0, 33)
     const schemaPath = data.openapiSchemas['remote-json-empty'].substr(33)
     nock(schemaHost)
       .get(schemaPath)
-      .reply(200, schemaString)
+      .reply(200, schemaBuffer.toString())
     // HEAD method must be mocked because it's used by url-exist package
     nock(schemaHost)
       .head(schemaPath)
       .reply(200, '')
 
     const schemaFilePath = data.openapiSchemas['remote-json-empty']
-    await expect(SchemExtractor.fromFile(schemaFilePath))
+    await expect(SchemExtractor.fromUrl(schemaFilePath))
       .rejects
       .toStrictEqual(Error('Invalid input schema: no model schemas found'))
   })
@@ -63,15 +64,15 @@ describe('fromFile', () => {
 
 describe('fromObject', () => {
   test('petstore.yaml v2.0', async () => {
-    const schemaString = FilePathManager.readFilePathToString(data.openapiSchemas['local-yaml-v2.0'])
-    const schemaObject = yaml.safeLoad(schemaString)
+    const schemaBuffer = fs.readFileSync(appRoot.resolve(data.openapiSchemas['local-yaml-v2.0']))
+    const schemaObject = yaml.safeLoad(schemaBuffer.toString())
     await expect(SchemExtractor.fromObject(schemaObject))
       .resolves
       .toStrictEqual(data.result)
   })
 
   test('petstore.json v2.0', async () => {
-    const schemaObject = require('.' + data.openapiSchemas['local-json-v2.0'])
+    const schemaObject = require(appRoot.resolve(data.openapiSchemas['local-json-v2.0']))
     await expect(SchemExtractor.fromObject(schemaObject))
       .resolves
       .toStrictEqual(data.result)
@@ -94,15 +95,15 @@ describe('fromObject', () => {
 
 describe('fromString', () => {
   test('petstore.yaml v2.0', async () => {
-    const schemaString = FilePathManager.readFilePathToString(data.openapiSchemas['local-yaml-v2.0'])
-    await expect(SchemExtractor.fromString(schemaString))
+    const schemaBuffer = fs.readFileSync(appRoot.resolve(data.openapiSchemas['local-yaml-v2.0']))
+    await expect(SchemExtractor.fromString(schemaBuffer.toString()))
       .resolves
       .toStrictEqual(data.result)
   })
 
   test('petstore.json v2.0', async () => {
-    const schemaString = FilePathManager.readFilePathToString(data.openapiSchemas['local-json-v2.0'])
-    await expect(SchemExtractor.fromString(schemaString))
+    const schemaBuffer = fs.readFileSync(appRoot.resolve(data.openapiSchemas['local-json-v2.0']))
+    await expect(SchemExtractor.fromString(schemaBuffer.toString()))
       .resolves
       .toStrictEqual(data.result)
   })

@@ -1,6 +1,8 @@
 'use strict'
 
-const JSONSchemaManager = require('../lib/json-schema-manager')
+const appRoot = require('app-root-path')
+
+const JSONSchemaManager = require(appRoot.resolve('/lib/json-schema-manager'))
 
 describe('JSONSchemaManager.fix', () => {
   test('type is added to model', () => {

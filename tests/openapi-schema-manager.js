@@ -1,6 +1,8 @@
 'use strict'
 
-const OpenAPISchemaManager = require('../lib/openapi-schema-manager')
+const appRoot = require('app-root-path')
+
+const OpenAPISchemaManager = require(appRoot.resolve('/lib/openapi-schema-manager'))
 
 describe('getModelSchemas', () => {
   test('empty object', () => {
