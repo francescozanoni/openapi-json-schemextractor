@@ -5,62 +5,12 @@
  */
 
 const yaml = require('js-yaml')
-const nock = require('nock')
 const fs = require('fs')
 const appRoot = require('app-root-path')
 
 const SchemExtractor = require(appRoot.resolve('/lib/index'))
 
 const data = require(appRoot.resolve('/tests/data'))
-
-describe('fromUrl', () => {
-  test('invalid URL: petstore.yaml v2.0', async () => {
-    const schemaFilePath = appRoot.resolve(data.openapiSchemas['local-yaml-v2.0'])
-    await expect(SchemExtractor.fromUrl(schemaFilePath))
-      .rejects
-      .toStrictEqual(Error('Invalid schema file URL'))
-  })
-
-  test('invalid URL: petstore.json v2.0', async () => {
-    const schemaFilePath = appRoot.resolve(data.openapiSchemas['local-json-v2.0'])
-    await expect(SchemExtractor.fromUrl(schemaFilePath))
-      .rejects
-      .toStrictEqual(Error('Invalid schema file URL'))
-  })
-
-  test('invalid URL: inexistent file path', async () => {
-    const schemaFilePath = appRoot.resolve(data.openapiSchemas['local-inexistent'])
-    await expect(SchemExtractor.fromUrl(schemaFilePath))
-      .rejects
-      .toStrictEqual(Error('Invalid schema file URL'))
-  })
-
-  test('invalid file path (number)', async () => {
-    const schemaFilePath = data.openapiSchemas['local-invalid-path']
-    await expect(SchemExtractor.fromUrl(schemaFilePath))
-      .rejects
-      .toStrictEqual(Error('Input schema file URL is not a string'))
-  })
-
-  test('empty-openapi.json', async () => {
-    // Mock HTTP server
-    const schemaBuffer = fs.readFileSync(appRoot.resolve(data.openapiSchemas['local-json-empty']))
-    const schemaHost = data.openapiSchemas['remote-json-empty'].substr(0, 33)
-    const schemaPath = data.openapiSchemas['remote-json-empty'].substr(33)
-    nock(schemaHost)
-      .get(schemaPath)
-      .reply(200, schemaBuffer.toString())
-    // HEAD method must be mocked because it's used by url-exist package
-    nock(schemaHost)
-      .head(schemaPath)
-      .reply(200, '')
-
-    const schemaFilePath = data.openapiSchemas['remote-json-empty']
-    await expect(SchemExtractor.fromUrl(schemaFilePath))
-      .rejects
-      .toStrictEqual(Error('Invalid input schema: no model schemas found'))
-  })
-})
 
 describe('fromObject', () => {
   test('petstore.yaml v2.0', async () => {
@@ -112,6 +62,13 @@ describe('fromString', () => {
     const schemaString = ''
     await expect(SchemExtractor.fromString(schemaString))
       .rejects
-      .toStrictEqual(Error('Expected a file path, URL, or object. Got undefined'))
+      .toStrictEqual(Error('Input schema string is neither a valid JSON object nor a valid YAML object'))
+  })
+
+  test('invalid schema string (number)', async () => {
+    const schemaString = 123
+    await expect(SchemExtractor.fromString(schemaString))
+      .rejects
+      .toStrictEqual(Error('Input schema is not a string'))
   })
 })

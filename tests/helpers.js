@@ -124,6 +124,56 @@ describe('isEmpty', () => {
   }
 })
 
+describe('isJsonObject', () => {
+  const trueValues = [
+    '{}', '  { }  ', '{"a":1}', '{"a":[]}', '{"a":{}}'
+  ]
+
+  const falseValues = [
+    null, {}, 123, function () {}, undefined, Object.create({}),
+    '[]', 'a', '1', '{a:1}', '{a:[]', '{a:{a}}'
+  ]
+
+  for (const value of trueValues) {
+    test('' + JSON.stringify(value), () => {
+      expect(helpers.isJsonObject(value))
+        .toStrictEqual(true)
+    })
+  }
+
+  for (const value of falseValues) {
+    test('' + JSON.stringify(value), () => {
+      expect(helpers.isJsonObject(value))
+        .toStrictEqual(false)
+    })
+  }
+})
+
+describe('isYamlObject', () => {
+  const trueValues = [
+    'a:\n  b: 1', 'a: 2'
+  ]
+
+  const falseValues = [
+    null, {}, 123, function () {}, undefined, Object.create({}),
+    '', ' - 1\n - 2', 'a:['
+  ]
+
+  for (const value of trueValues) {
+    test('' + JSON.stringify(value), () => {
+      expect(helpers.isYamlObject(value))
+        .toStrictEqual(true)
+    })
+  }
+
+  for (const value of falseValues) {
+    test('' + JSON.stringify(value), () => {
+      expect(helpers.isYamlObject(value))
+        .toStrictEqual(false)
+    })
+  }
+})
+
 describe('isWebUrl', () => {
   const trueValues = [
     'http://example.com', 'https://example.com'

@@ -10,7 +10,6 @@ Entity schemas are extracted from:
 
 Input [OpenAPI](https://swagger.io/docs/specification/about) schemas can be supplied as:
 
-- URLs (**http** or **https**),
 - strings,
 - native JavaScript objects.
 
@@ -42,9 +41,8 @@ const SchemExtractor = require("openapi-json-schemextractor")
 
 (async function () {
 
-  let schFromUrl = await SchemExtractor.fromUrl("http://example.com/openapi.yaml")
-  let schFromString = await SchemExtractor.fromString("...")
-  let schFromObject = await SchemExtractor.fromObject({/* ... */})
+  let schemeFromString = await SchemExtractor.fromString("...")
+  let schemeFromObject = await SchemExtractor.fromObject({/* ... */})
 
 })()
 ```
