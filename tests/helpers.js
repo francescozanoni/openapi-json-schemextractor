@@ -152,7 +152,7 @@ describe('isJsonObject', () => {
 describe('isYamlObject', () => {
   const trueValues = [
     'a:\n  b: 1',
-    'a: 2',
+    'a: 2'
   ]
 
   const falseValues = [
