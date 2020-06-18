@@ -151,12 +151,16 @@ describe('isJsonObject', () => {
 
 describe('isYamlObject', () => {
   const trueValues = [
-    'a:\n  b: 1', 'a: 2'
+    'a:\n  b: 1',
+    'a: 2',
   ]
 
   const falseValues = [
     null, {}, 123, function () {}, undefined, Object.create({}),
-    '', ' - 1\n - 2', 'a:['
+    '',
+    ' - 1\n - 2', // array
+    'a:[',
+    'a: 1\na: 2' // duplicate key
   ]
 
   for (const value of trueValues) {
