@@ -15,6 +15,7 @@ Input [OpenAPI](https://swagger.io/docs/specification/about) schemas can be supp
 
 Furthermore:
 
+
 - both [OpenAPI 2](https://swagger.io/docs/specification/2-0) and [OpenAPI 3](https://swagger.io/docs/specification) specifications are supported,
 - both [JSON](https://www.json.org) and [YAML](https://yaml.org) formats are supported.
 
